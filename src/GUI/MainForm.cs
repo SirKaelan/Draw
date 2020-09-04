@@ -1,20 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Draw.src.Controls;
 
 namespace Draw
 {
-	/// <summary>
-	/// Върху главната форма е поставен потребителски контрол,
-	/// в който се осъществява визуализацията
-	/// </summary>
-	public partial class MainForm : Form
+    /// <summary>
+    /// Върху главната форма е поставен потребителски контрол,
+    /// в който се осъществява визуализацията
+    /// </summary>
+    public partial class MainForm : Form
 	{
 		/// <summary>
 		/// Агрегирания диалогов процесор във формата улеснява манипулацията на модела.
 		/// </summary>
 		private DialogProcessor dialogProcessor = new DialogProcessor();
+
+		private ColorDialog ColorPickerDialog = new ColorDialog();
 		
 		public MainForm()
 		{
@@ -22,16 +24,33 @@ namespace Draw
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
+            this.viewPort.Click += ViewPort_Click;
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
 
-		/// <summary>
-		/// Изход от програмата. Затваря главната форма, а с това и програмата.
-		/// </summary>
-		void ExitToolStripMenuItemClick(object sender, EventArgs e)
+        private void ViewPort_Click(object sender, EventArgs e)
+        {
+            if (sender is Control control)
+            {
+                foreach (var innerControl in control.Controls)
+                {
+                    if (innerControl is RectangleControl rectange)
+                    {
+						rectange.ShowBorder = false;
+						rectange.Invalidate();
+                    }
+                }
+            }
+
+			this.ColorPicker.Checked = false;
+		}
+
+        /// <summary>
+        /// Изход от програмата. Затваря главната форма, а с това и програмата.
+        /// </summary>
+        void ExitToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			Close();
 		}
@@ -41,8 +60,8 @@ namespace Draw
 		/// </summary>
 		void ViewPortPaint(object sender, PaintEventArgs e)
 		{
-			dialogProcessor.ReDraw(sender, e);
-		}
+            //dialogProcessor.ReDraw(sender, e);
+        }
 		
 		/// <summary>
 		/// Бутон, който поставя на произволно място правоъгълник със зададените размери.
@@ -50,11 +69,15 @@ namespace Draw
 		/// </summary>
 		void DrawRectangleSpeedButtonClick(object sender, EventArgs e)
 		{
-			dialogProcessor.AddRandomRectangle();
+			//dialogProcessor.AddRandomRectangle();
 			
 			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
-			
-			viewPort.Invalidate();
+
+			var rect = new RectangleControl(Color.Red, new Point(20, 20), new Size(200, 300));
+			rect.Click += Shape_Click;
+			viewPort.Controls.Add(rect);
+		
+			//viewPort.Invalidate();
 		}
 
 		/// <summary>
@@ -97,5 +120,30 @@ namespace Draw
 		{
 			dialogProcessor.IsDragging = false;
 		}
-	}
+
+		private void Shape_Click(object sender, EventArgs e)
+        {
+			var rectangle = sender as RectangleControl;
+
+            if (pickUpSpeedButton.Checked)
+            {
+				rectangle.ShowBorder = !rectangle.ShowBorder;
+				rectangle.Invalidate();
+				pickUpSpeedButton.Checked = false;
+            }
+
+            if (this.ColorPicker.Checked)
+            {
+				rectangle.BrushColor = this.ColorPickerDialog.Color;
+				rectangle.Invalidate();
+				this.ColorPicker.Checked = false;
+            }
+        }
+
+        private void ColorPicker_Click(object sender, EventArgs e)
+        {
+			this.ColorPicker.Checked = true;
+			this.ColorPickerDialog.ShowDialog();
+		}
+    }
 }
