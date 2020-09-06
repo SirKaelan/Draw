@@ -20,6 +20,8 @@ namespace Draw.src.Controls
         private Rectangle _middleRightHandle;
         private Handle _activeHandle;
 
+        private Point _location;
+
         public RectangleControl(Color brushColor, Point location, Size size)
         {
             this.Degrees = 10;
@@ -30,16 +32,17 @@ namespace Draw.src.Controls
 
             this.Size = CalculateBoundingSize(size);
 
-            this.RectangleWidth = size.Width;
-            this.RectangleHeight = size.Height;
+            _location = new Point(200, 200);
+            this.RectangleWidth = 200;
+            this.RectangleHeight = 300;
 
-            this.Rectangle = new Rectangle(new Point(0, 0), size);
+            this.Rectangle = new Rectangle(new Point(-100, -150), new Size(200, 300));
 
             SetStyle(ControlStyles.DoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
-        public double Degrees { get; set; }
+        public float Degrees { get; set; }
 
         public bool ShowBorder { get; set; }
 
@@ -98,15 +101,13 @@ namespace Draw.src.Controls
             _center = new Point(this.Rectangle.Left + (this.Rectangle.Width / 2), this.Rectangle.Top + (this.Rectangle.Height / 2));
 
 
-            var matrix = new Matrix();
-            matrix.RotateAt((float)this.Degrees, new Point(this.Width / 2, this.Height / 2));
-            matrix.Translate(this.Width / 2 - this.RectangleWidth / 2, this.Height / 2 - this.RectangleHeight / 2);
-            e.Graphics.Transform = matrix;
-
             //var matrix = new Matrix();
-            //matrix.Translate(this.Rectangle.Location.X, this.Rectangle.Location.Y);
-            //matrix.Rotate((float)this.Degrees);
+            //matrix.RotateAt((float)this.Degrees, new Point(this.Width / 2, this.Height / 2));
+            //matrix.Translate(this.Width / 2 - this.RectangleWidth / 2, this.Height / 2 - this.RectangleHeight / 2);
             //e.Graphics.Transform = matrix;
+
+            var matrix = GetTransformation();
+            e.Graphics.Transform = matrix;
 
             var handleBrush = new SolidBrush(Color.Black);
 
@@ -127,25 +128,29 @@ namespace Draw.src.Controls
             var clickRect = new Rectangle(clickLocation, new Size(10, 10));
             e.Graphics.FillRectangle(new SolidBrush(Color.DeepSkyBlue), clickRect);
 
-            //e.Graphics.ResetTransform();
+            var locRect = new Rectangle(_location, new Size(10, 10));
+            e.Graphics.FillRectangle(new SolidBrush(Color.AliceBlue), locRect);
+
+            e.Graphics.ResetTransform();
+        }
+
+        private Matrix GetTransformation()
+        {
+            var matrix = new Matrix();
+            matrix.Translate(_location.X, _location.Y);
+            matrix.Rotate(this.Degrees);
+            return matrix;
         }
 
         private Point TransformPoint(Point point)
         {
-            var matrix = new Matrix();
-            matrix.RotateAt((float)this.Degrees, new Point(this.Width / 2, this.Height / 2));
-            matrix.Translate(this.Width / 2 - this.RectangleWidth / 2, this.Height / 2 - this.RectangleHeight / 2);
-            matrix.Invert();
-
             //var matrix = new Matrix();
-            //matrix.RotateAt((float)this.Degrees, _center);
+            //matrix.RotateAt((float)this.Degrees, new Point(this.Width / 2, this.Height / 2));
             //matrix.Translate(this.Width / 2 - this.RectangleWidth / 2, this.Height / 2 - this.RectangleHeight / 2);
             //matrix.Invert();
 
-            //var matrix = new Matrix();
-            //matrix.Translate(this.Rectangle.Location.X, this.Rectangle.Location.Y);
-            //matrix.Rotate((float)this.Degrees);
-            //matrix.Invert();
+            var matrix = GetTransformation();
+            matrix.Invert();
 
             var points = new Point[] { point };
             matrix.TransformPoints(points);
@@ -208,6 +213,10 @@ namespace Draw.src.Controls
             else if (_bottomRightHandle.Contains(clickLocation))
             {
                 _activeHandle = Handle.BottomRight;
+            }
+            else if (this.Rectangle.Contains(clickLocation))
+            {
+                _activeHandle = Handle.Inside;
             }
             else
             {
@@ -274,11 +283,22 @@ namespace Draw.src.Controls
 
             if (_activeHandle == Handle.Rotation)
             {
-                var center = new Point(this.InitialRectangle.Left + (this.InitialRectangle.Width / 2), this.InitialRectangle.Top + (this.InitialRectangle.Height / 2));
-                this.Degrees = CalculateAngle(center, this.TClickLocation, currentLocation);
+                var x = currentLocation.X;
+                var y = currentLocation.Y;
+                var length = Math.Sqrt(x * x + y * y);
+                var cos = y / length;
+                var radians = Math.Acos(-cos);
+                if (currentLocation.X < 0)
+                {
+                    radians = -radians;
+                }
 
-                this.Invalidate();
-                return;
+                if (double.IsNaN(radians))
+                {
+                    radians = 0;
+                }
+
+                this.Degrees += (float)(180 / Math.PI * radians);
             }
             else if (_activeHandle == Handle.TopLeft)
             {
@@ -286,32 +306,22 @@ namespace Draw.src.Controls
                 top -= distanceY;
                 width += distanceX;
                 height += distanceY;
-                //this.Rectangle = new Rectangle(this.InitialRectangle.Left - distanceX, this.InitialRectangle.Top - distanceY, this.InitialRectangle.Width + distanceX, this.InitialRectangle.Height + distanceY);
             }
             else if (_activeHandle == Handle.TopMiddle)
             {
                 top -= distanceY;
                 height += distanceY;
-                //this.Rectangle = new Rectangle(this.InitialRectangle.Left, this.InitialRectangle.Top - distanceY, this.InitialRectangle.Width, this.InitialRectangle.Height + distanceY);
             }
             else if (_activeHandle == Handle.TopRight)
             {
                 top -= distanceY;
                 width -= distanceX;
                 height += distanceY;
-                //this.Rectangle = new Rectangle(this.InitialRectangle.Left, this.InitialRectangle.Top - distanceY, this.InitialRectangle.Width - distanceX, this.InitialRectangle.Height + distanceY);
             }
             else if (_activeHandle == Handle.MiddleLeft)
             {
                 left -= distanceX;
                 width += distanceX;
-                //var distance = (int)CalculateDistance(this.TClickLocation, currentLocation);
-                //if (this.InitialRectangle.Contains(currentLocation))
-                //{
-                //    distance = -distance;
-                //}
-
-                //this.Rectangle = new Rectangle(this.InitialRectangle.Left - distanceX, this.InitialRectangle.Top, this.InitialRectangle.Width + distanceX, this.InitialRectangle.Height);
             }
             else if (_activeHandle == Handle.MiddleRight)
             {
@@ -332,7 +342,7 @@ namespace Draw.src.Controls
                 width -= distanceX;
                 height -= distanceY;
             }
-            else
+            else if (_activeHandle == Handle.Inside)
             {
                 left -= distanceX;
                 top -= distanceY;
@@ -411,10 +421,20 @@ namespace Draw.src.Controls
             base.OnMouseUp(e);
 
             this.IsClicked = false;
+
+            var matrix = GetTransformation();
+            var points = new Point[] { _center };
+            matrix.TransformPoints(points);
+            var asd = points[0];
+            //_location = new Point(_location.X + _center.X, _location.Y + _center.Y);
+            _location = asd;
+            this.Rectangle = new Rectangle(0 - this.Rectangle.Width / 2, 0 - this.Rectangle.Height / 2, this.Rectangle.Width, this.Rectangle.Height);
+            this.Invalidate();
         }
         public enum Handle
         {
             None,
+            Inside,
             TopLeft,
             TopMiddle,
             TopRight,

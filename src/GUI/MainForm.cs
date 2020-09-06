@@ -73,7 +73,7 @@ namespace Draw
 			
 			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
 
-			var rect = new RectangleControl(Color.Red, new Point(20, 20), new Size(200, 400));
+			var rect = new RectangleControl(Color.Red, new Point(20, 20), new Size(1400, 400));
 			rect.ShowBorder = true;
 			rect.Click += Shape_Click;
 			viewPort.Controls.Add(rect);
