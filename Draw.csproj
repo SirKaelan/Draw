@@ -45,6 +45,7 @@
     <Compile Include="src\Controls\RectangleControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\Enumerations\Handle.cs" />
     <Compile Include="src\GUI\DoubleBufferedPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

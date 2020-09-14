@@ -24,7 +24,7 @@ namespace Draw
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-            this.viewPort.Click += ViewPort_Click;
+            //this.viewPort.Click += ViewPort_Click;
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -60,7 +60,7 @@ namespace Draw
 		/// </summary>
 		void ViewPortPaint(object sender, PaintEventArgs e)
 		{
-            //dialogProcessor.ReDraw(sender, e);
+            dialogProcessor.ReDraw(sender, e);
         }
 		
 		/// <summary>
@@ -69,16 +69,16 @@ namespace Draw
 		/// </summary>
 		void DrawRectangleSpeedButtonClick(object sender, EventArgs e)
 		{
-			//dialogProcessor.AddRandomRectangle();
+			dialogProcessor.AddRandomRectangle();
 			
 			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
 
-			var rect = new RectangleControl(Color.Red, new Point(20, 20), new Size(1400, 400));
-			rect.ShowBorder = true;
-			rect.Click += Shape_Click;
-			viewPort.Controls.Add(rect);
-		
-			//viewPort.Invalidate();
+            //var rect = new RectangleControl(Color.Red, new Point(20, 20), new Size(1400, 400));
+            //rect.ShowBorder = true;
+            //rect.Click += Shape_Click;
+            //viewPort.Controls.Add(rect);
+
+            viewPort.Invalidate();
 		}
 
 		/// <summary>
@@ -87,16 +87,18 @@ namespace Draw
 		/// Промяна на статуса и инвалидиране на контрола, в който визуализираме.
 		/// Реализацията се диалогът с потребителя, при който се избира "най-горния" елемент от екрана.
 		/// </summary>
-		void ViewPortMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+		void ViewPortMouseDown(object sender, MouseEventArgs e)
 		{
 			if (pickUpSpeedButton.Checked) {
 				dialogProcessor.Selection = dialogProcessor.ContainsPoint(e.Location);
 				if (dialogProcessor.Selection != null) {
 					statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
 					dialogProcessor.IsDragging = true;
-					dialogProcessor.LastLocation = e.Location;
-					viewPort.Invalidate();
+					//dialogProcessor.LastLocation = e.Location;
+					dialogProcessor.Selection.MouseDown(viewPort, e);
 				}
+
+				viewPort.Invalidate();
 			}
 		}
 
@@ -107,8 +109,12 @@ namespace Draw
 		void ViewPortMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			if (dialogProcessor.IsDragging) {
-				if (dialogProcessor.Selection != null) statusBar.Items[0].Text = "Последно действие: Влачене";
-				dialogProcessor.TranslateTo(e.Location);
+				if (dialogProcessor.Selection != null)
+                {
+					statusBar.Items[0].Text = "Последно действие: Влачене";
+					dialogProcessor.Selection.MouseMove(e);
+				}
+				//dialogProcessor.TranslateTo(e.Location);
 				viewPort.Invalidate();
 			}
 		}
@@ -117,9 +123,13 @@ namespace Draw
 		/// Прихващане на отпускането на бутона на мишката.
 		/// Излизаме от режим "влачене".
 		/// </summary>
-		void ViewPortMouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+		void ViewPortMouseUp(object sender, MouseEventArgs e)
 		{
 			dialogProcessor.IsDragging = false;
+            if (dialogProcessor.Selection != null)
+            {
+				dialogProcessor.Selection.MouseUp(e);
+            }
 		}
 
 		private void Shape_Click(object sender, EventArgs e)

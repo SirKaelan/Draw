@@ -62,7 +62,7 @@ namespace Draw
 		/// <param name="item">Елемент за визуализиране.</param>
 		public virtual void DrawShape(Graphics grfx, Shape item)
 		{
-			item.DrawSelf(grfx);
+			item.Paint(grfx);
 		}
 		
 		#endregion

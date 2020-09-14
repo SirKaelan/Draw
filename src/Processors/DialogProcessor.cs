@@ -53,12 +53,17 @@ namespace Draw
 		/// </summary>
 		public void AddRandomRectangle()
 		{
-			Random rnd = new Random();
-			int x = rnd.Next(100,1000);
-			int y = rnd.Next(100,600);
-			
-			RectangleShape rect = new RectangleShape(new Rectangle(x,y,100,200));
-			rect.FillColor = Color.White;
+			var rnd = new Random();
+			var x = rnd.Next(100, 1000);
+			var y = rnd.Next(100, 600);
+			var location = new Point(x, y);
+
+			var width = rnd.Next(100, 400);
+			var height = rnd.Next(100, 400);
+			var size = new Size(width, height);
+
+			var rect = new Shape(location, size);
+			//rect.FillColor = Color.White;
 
 			ShapeList.Add(rect);
 		}
@@ -70,16 +75,19 @@ namespace Draw
 		/// </summary>
 		/// <param name="point">Указана точка</param>
 		/// <returns>Елемента на изображението, на който принадлежи дадената точка.</returns>
-		public Shape ContainsPoint(PointF point)
+		public Shape ContainsPoint(Point point)
 		{
-			for(int i = ShapeList.Count - 1; i >= 0; i--){
-				if (ShapeList[i].Contains(point)){
-					ShapeList[i].FillColor = Color.Red;
-						
-					return ShapeList[i];
+			Shape shape = null;
+			for(int i = ShapeList.Count - 1; i >= 0; i--)
+			{
+				ShapeList[i].Selected = ShapeList[i].Contains(point);
+				if (ShapeList[i].Selected && shape == null)
+				{
+					shape = ShapeList[i];
 				}	
 			}
-			return null;
+
+			return shape;
 		}
 		
 		/// <summary>
@@ -88,10 +96,10 @@ namespace Draw
 		/// <param name="p">Вектор на транслация.</param>
 		public void TranslateTo(PointF p)
 		{
-			if (selection != null) {
-				selection.Location = new PointF(selection.Location.X + p.X - lastLocation.X, selection.Location.Y + p.Y - lastLocation.Y);
-				lastLocation = p;
-			}
+			//if (selection != null) {
+			//	selection.Location = new PointF(selection.Location.X + p.X - lastLocation.X, selection.Location.Y + p.Y - lastLocation.Y);
+			//	lastLocation = p;
+			//}
 		}
 	}
 }

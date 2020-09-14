@@ -6,17 +6,17 @@ namespace Draw
 	/// <summary>
 	/// Класът правоъгълник е основен примитив, който е наследник на базовия Shape.
 	/// </summary>
-	public class RectangleShape : Shape
+	public class RectangleShape //: Shape
 	{
 		#region Constructor
 		
-		public RectangleShape(RectangleF rect) : base(rect)
-		{
-		}
+		//public RectangleShape(RectangleF rect) : base(rect)
+		//{
+		//}
 		
-		public RectangleShape(RectangleShape rectangle) : base(rectangle)
-		{
-		}
+		//public RectangleShape(RectangleShape rectangle) : base(rectangle)
+		//{
+		//}
 		
 		#endregion
 
@@ -27,27 +27,27 @@ namespace Draw
 		/// дали точката е в обхващащия правоъгълник на елемента (а той съвпада с
 		/// елемента в този случай).
 		/// </summary>
-		public override bool Contains(PointF point)
-		{
-			if (base.Contains(point))
-				// Проверка дали е в обекта само, ако точката е в обхващащия правоъгълник.
-				// В случая на правоъгълник - директно връщаме true
-				return true;
-			else
-				// Ако не е в обхващащия правоъгълник, то неможе да е в обекта и => false
-				return false;
-		}
+		//public override bool Contains(PointF point)
+		//{
+		//	if (base.Contains(point))
+		//		// Проверка дали е в обекта само, ако точката е в обхващащия правоъгълник.
+		//		// В случая на правоъгълник - директно връщаме true
+		//		return true;
+		//	else
+		//		// Ако не е в обхващащия правоъгълник, то неможе да е в обекта и => false
+		//		return false;
+		//}
 		
 		/// <summary>
 		/// Частта, визуализираща конкретния примитив.
 		/// </summary>
-		public override void DrawSelf(Graphics grfx)
-		{
-			base.DrawSelf(grfx);
+		//public override void DrawSelf(Graphics grfx)
+		//{
+		//	base.DrawSelf(grfx);
 			
-			grfx.FillRectangle(new SolidBrush(FillColor),Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-			grfx.DrawRectangle(Pens.Black,Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+		//	grfx.FillRectangle(new SolidBrush(FillColor),Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+		//	grfx.DrawRectangle(Pens.Black,Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 			
-		}
+		//}
 	}
 }
