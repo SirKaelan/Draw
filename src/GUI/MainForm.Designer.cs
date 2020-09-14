@@ -39,9 +39,14 @@
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.currentStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.speedMenu = new System.Windows.Forms.ToolStrip();
-            this.drawRectangleSpeedButton = new System.Windows.Forms.ToolStripButton();
-            this.pickUpSpeedButton = new System.Windows.Forms.ToolStripButton();
+            this.PointerButton = new System.Windows.Forms.ToolStripButton();
             this.ColorPicker = new System.Windows.Forms.ToolStripButton();
+            this.SelectedColor = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.DrawRectangle = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledRectangle = new System.Windows.Forms.ToolStripButton();
+            this.DrawEllipse = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledEllipse = new System.Windows.Forms.ToolStripButton();
             this.viewPort = new Draw.DoubleBufferedPanel();
             this.mainMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -124,44 +129,94 @@
             // 
             this.speedMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.speedMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.drawRectangleSpeedButton,
-            this.pickUpSpeedButton,
-            this.ColorPicker});
+            this.PointerButton,
+            this.ColorPicker,
+            this.SelectedColor,
+            this.toolStripSeparator1,
+            this.DrawRectangle,
+            this.DrawFilledRectangle,
+            this.DrawEllipse,
+            this.DrawFilledEllipse});
             this.speedMenu.Location = new System.Drawing.Point(0, 28);
             this.speedMenu.Name = "speedMenu";
             this.speedMenu.Size = new System.Drawing.Size(924, 27);
             this.speedMenu.TabIndex = 3;
             this.speedMenu.Text = "toolStrip1";
             // 
-            // drawRectangleSpeedButton
+            // PointerButton
             // 
-            this.drawRectangleSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.drawRectangleSpeedButton.Image = ((System.Drawing.Image)(resources.GetObject("drawRectangleSpeedButton.Image")));
-            this.drawRectangleSpeedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.drawRectangleSpeedButton.Name = "drawRectangleSpeedButton";
-            this.drawRectangleSpeedButton.Size = new System.Drawing.Size(29, 24);
-            this.drawRectangleSpeedButton.Text = "DrawRectangleButton";
-            this.drawRectangleSpeedButton.Click += new System.EventHandler(this.DrawRectangleSpeedButtonClick);
-            // 
-            // pickUpSpeedButton
-            // 
-            this.pickUpSpeedButton.CheckOnClick = true;
-            this.pickUpSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pickUpSpeedButton.Image = ((System.Drawing.Image)(resources.GetObject("pickUpSpeedButton.Image")));
-            this.pickUpSpeedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pickUpSpeedButton.Name = "pickUpSpeedButton";
-            this.pickUpSpeedButton.Size = new System.Drawing.Size(29, 24);
-            this.pickUpSpeedButton.Text = "toolStripButton1";
+            this.PointerButton.CheckOnClick = true;
+            this.PointerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PointerButton.Image = ((System.Drawing.Image)(resources.GetObject("PointerButton.Image")));
+            this.PointerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PointerButton.Name = "PointerButton";
+            this.PointerButton.Size = new System.Drawing.Size(29, 24);
+            this.PointerButton.Text = "toolStripButton1";
             // 
             // ColorPicker
             // 
+            this.ColorPicker.CheckOnClick = true;
             this.ColorPicker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.ColorPicker.Image = ((System.Drawing.Image)(resources.GetObject("ColorPicker.Image")));
             this.ColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ColorPicker.Name = "ColorPicker";
             this.ColorPicker.Size = new System.Drawing.Size(29, 24);
             this.ColorPicker.Text = "toolStripButton1";
-            this.ColorPicker.Click += new System.EventHandler(this.ColorPicker_Click);
+            // 
+            // SelectedColor
+            // 
+            this.SelectedColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.SelectedColor.Image = ((System.Drawing.Image)(resources.GetObject("SelectedColor.Image")));
+            this.SelectedColor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SelectedColor.Name = "SelectedColor";
+            this.SelectedColor.Size = new System.Drawing.Size(29, 24);
+            this.SelectedColor.Text = "toolStripButton1";
+            this.SelectedColor.Click += new System.EventHandler(this.SelectedColor_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // DrawRectangle
+            // 
+            this.DrawRectangle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawRectangle.Image = ((System.Drawing.Image)(resources.GetObject("DrawRectangle.Image")));
+            this.DrawRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawRectangle.Name = "DrawRectangle";
+            this.DrawRectangle.Size = new System.Drawing.Size(29, 24);
+            this.DrawRectangle.Text = "DrawRectangleButton";
+            this.DrawRectangle.Click += new System.EventHandler(this.DrawRectangleButtonClick);
+            // 
+            // DrawFilledRectangle
+            // 
+            this.DrawFilledRectangle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledRectangle.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledRectangle.Image")));
+            this.DrawFilledRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledRectangle.Name = "DrawFilledRectangle";
+            this.DrawFilledRectangle.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledRectangle.Text = "toolStripButton1";
+            this.DrawFilledRectangle.Click += new System.EventHandler(this.DrawFilledRectangle_Click);
+            // 
+            // DrawEllipse
+            // 
+            this.DrawEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawEllipse.Image = ((System.Drawing.Image)(resources.GetObject("DrawEllipse.Image")));
+            this.DrawEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawEllipse.Name = "DrawEllipse";
+            this.DrawEllipse.Size = new System.Drawing.Size(29, 24);
+            this.DrawEllipse.Text = "toolStripButton2";
+            this.DrawEllipse.Click += new System.EventHandler(this.DrawEllipse_Click);
+            // 
+            // DrawFilledEllipse
+            // 
+            this.DrawFilledEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledEllipse.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledEllipse.Image")));
+            this.DrawFilledEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledEllipse.Name = "DrawFilledEllipse";
+            this.DrawFilledEllipse.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledEllipse.Text = "toolStripButton3";
+            this.DrawFilledEllipse.Click += new System.EventHandler(this.DrawFilledEllipse_Click);
             // 
             // viewPort
             // 
@@ -204,8 +259,8 @@
 		
 		private System.Windows.Forms.ToolStripStatusLabel currentStatusLabel;
 		private Draw.DoubleBufferedPanel viewPort;
-		private System.Windows.Forms.ToolStripButton pickUpSpeedButton;
-		private System.Windows.Forms.ToolStripButton drawRectangleSpeedButton;
+		private System.Windows.Forms.ToolStripButton PointerButton;
+		private System.Windows.Forms.ToolStripButton DrawRectangle;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
@@ -216,5 +271,10 @@
 		private System.Windows.Forms.StatusStrip statusBar;
 		private System.Windows.Forms.MenuStrip mainMenu;
         private System.Windows.Forms.ToolStripButton ColorPicker;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton DrawFilledRectangle;
+        private System.Windows.Forms.ToolStripButton DrawEllipse;
+        private System.Windows.Forms.ToolStripButton DrawFilledEllipse;
+        private System.Windows.Forms.ToolStripButton SelectedColor;
     }
 }

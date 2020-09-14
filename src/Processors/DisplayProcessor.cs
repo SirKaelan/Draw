@@ -24,11 +24,7 @@ namespace Draw
 		/// <summary>
 		/// Списък с всички елементи формиращи изображението.
 		/// </summary>
-		private List<Shape> shapeList = new List<Shape>();		
-		public List<Shape> ShapeList {
-			get { return shapeList; }
-			set { shapeList = value; }
-		}
+		public List<Shape> ShapeList { get; } = new List<Shape>();
 		
 		#endregion
 		
@@ -62,7 +58,7 @@ namespace Draw
 		/// <param name="item">Елемент за визуализиране.</param>
 		public virtual void DrawShape(Graphics grfx, Shape item)
 		{
-			item.Paint(grfx);
+			item.Draw(grfx);
 		}
 		
 		#endregion

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Draw.src.Controls;
 
 namespace Draw
 {
@@ -20,31 +19,10 @@ namespace Draw
 		
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-            //this.viewPort.Click += ViewPort_Click;
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-		}
 
-        private void ViewPort_Click(object sender, EventArgs e)
-        {
-            if (sender is Control control)
-            {
-                foreach (var innerControl in control.Controls)
-                {
-                    if (innerControl is RectangleControl rectange)
-                    {
-						rectange.ShowBorder = false;
-						rectange.Invalidate();
-                    }
-                }
-            }
-
-			this.ColorPicker.Checked = false;
+			SelectedColor.BackColor = Color.IndianRed;
+			ColorPickerDialog.Color = Color.IndianRed;
 		}
 
         /// <summary>
@@ -62,24 +40,6 @@ namespace Draw
 		{
             dialogProcessor.ReDraw(sender, e);
         }
-		
-		/// <summary>
-		/// Бутон, който поставя на произволно място правоъгълник със зададените размери.
-		/// Променя се лентата със състоянието и се инвалидира контрола, в който визуализираме.
-		/// </summary>
-		void DrawRectangleSpeedButtonClick(object sender, EventArgs e)
-		{
-			dialogProcessor.AddRandomRectangle();
-			
-			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
-
-            //var rect = new RectangleControl(Color.Red, new Point(20, 20), new Size(1400, 400));
-            //rect.ShowBorder = true;
-            //rect.Click += Shape_Click;
-            //viewPort.Controls.Add(rect);
-
-            viewPort.Invalidate();
-		}
 
 		/// <summary>
 		/// Прихващане на координатите при натискането на бутон на мишката и проверка (в обратен ред) дали не е
@@ -89,34 +49,49 @@ namespace Draw
 		/// </summary>
 		void ViewPortMouseDown(object sender, MouseEventArgs e)
 		{
-			if (pickUpSpeedButton.Checked) {
-				dialogProcessor.Selection = dialogProcessor.ContainsPoint(e.Location);
-				if (dialogProcessor.Selection != null) {
-					statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
-					dialogProcessor.IsDragging = true;
-					//dialogProcessor.LastLocation = e.Location;
-					dialogProcessor.Selection.MouseDown(viewPort, e);
-				}
-
+			var shape = dialogProcessor.ContainsPoint(e.Location);
+            if (shape == null)
+            {
+				dialogProcessor.Deselect();
 				viewPort.Invalidate();
+				return;
+            }
+
+			if (PointerButton.Checked) 
+			{
+				dialogProcessor.Select(shape);
+				shape.DragStart(e);
+				statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
+            }
+
+            if (ColorPicker.Checked)
+            {
+				shape.FillColor = ColorPickerDialog.Color;
+				shape.BorderColor = ColorPickerDialog.Color;
+				statusBar.Items[0].Text = "Последно действие: Задаване цвят на примитив";
 			}
+
+			viewPort.Invalidate();
 		}
 
 		/// <summary>
 		/// Прихващане на преместването на мишката.
 		/// Ако сме в режм на "влачене", то избрания елемент се транслира.
 		/// </summary>
-		void ViewPortMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void ViewPortMouseMove(object sender, MouseEventArgs e)
 		{
-			if (dialogProcessor.IsDragging) {
-				if (dialogProcessor.Selection != null)
-                {
-					statusBar.Items[0].Text = "Последно действие: Влачене";
-					dialogProcessor.Selection.MouseMove(e);
-				}
-				//dialogProcessor.TranslateTo(e.Location);
-				viewPort.Invalidate();
-			}
+			if (dialogProcessor.Selection == null)
+            {
+				return;
+            }
+
+            if (PointerButton.Checked)
+            {
+				dialogProcessor.Selection.Drag(e);
+				statusBar.Items[0].Text = "Последно действие: Влачене";
+            }
+
+			viewPort.Invalidate();
 		}
 
 		/// <summary>
@@ -125,36 +100,67 @@ namespace Draw
 		/// </summary>
 		void ViewPortMouseUp(object sender, MouseEventArgs e)
 		{
-			dialogProcessor.IsDragging = false;
-            if (dialogProcessor.Selection != null)
+			if (dialogProcessor.Selection == null)
+			{
+				return;
+			}
+
+			if (PointerButton.Checked)
             {
-				dialogProcessor.Selection.MouseUp(e);
+				dialogProcessor.Selection.DragEnd(e);
             }
+
+			viewPort.Invalidate();
 		}
 
-		private void Shape_Click(object sender, EventArgs e)
+		private void SelectedColor_Click(object sender, EventArgs e)
+		{
+			ColorPickerDialog.ShowDialog();
+			SelectedColor.BackColor = ColorPickerDialog.Color;
+		}
+
+		/// <summary>
+		/// Бутон, който поставя на произволно място правоъгълник със зададените размери.
+		/// Променя се лентата със състоянието и се инвалидира контрола, в който визуализираме.
+		/// </summary>
+		void DrawRectangleButtonClick(object sender, EventArgs e)
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomRectangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledRectangle_Click(object sender, EventArgs e)
         {
-			var rectangle = sender as RectangleControl;
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledRectangle(color);
 
-            if (pickUpSpeedButton.Checked)
-            {
-				rectangle.ShowBorder = !rectangle.ShowBorder;
-				rectangle.Invalidate();
-				pickUpSpeedButton.Checked = false;
-            }
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен правоъгълник";
 
-            if (this.ColorPicker.Checked)
-            {
-				rectangle.BrushColor = this.ColorPickerDialog.Color;
-				rectangle.Invalidate();
-				this.ColorPicker.Checked = false;
-            }
-        }
+			viewPort.Invalidate();
+		}
 
-        private void ColorPicker_Click(object sender, EventArgs e)
+        private void DrawEllipse_Click(object sender, EventArgs e)
         {
-			this.ColorPicker.Checked = true;
-			this.ColorPickerDialog.ShowDialog();
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomElipse(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
+
+			viewPort.Invalidate();
+		}
+
+        private void DrawFilledEllipse_Click(object sender, EventArgs e)
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledElipse(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнена елипса";
+
+			viewPort.Invalidate();
 		}
     }
 }

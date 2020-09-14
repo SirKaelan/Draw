@@ -42,9 +42,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="src\AssemblyInfo.cs" />
-    <Compile Include="src\Controls\RectangleControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="src\Enumerations\Handle.cs" />
     <Compile Include="src\GUI\DoubleBufferedPanel.cs">
       <SubType>UserControl</SubType>
@@ -59,6 +56,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\GUI\Program.cs" />
+    <Compile Include="src\Model\EllipseShape.cs" />
     <Compile Include="src\Model\RectangleShape.cs" />
     <Compile Include="src\Model\Shape.cs" />
     <Compile Include="src\Processors\DialogProcessor.cs" />

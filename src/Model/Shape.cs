@@ -6,10 +6,10 @@ using Draw.src.Enumerations;
 
 namespace Draw
 {
-    public class Shape
+    public abstract class Shape
 	{
         private Point _location;
-        private Rectangle _rectangle;
+        protected Rectangle _rectangle;
 
         private Point _center;
         private Rectangle _centerHandle;
@@ -28,7 +28,7 @@ namespace Draw
         private Point _clickLocation;
         private Rectangle _initialRectangle;
 
-        public Shape(Point location, Size size)
+        protected Shape(Point location, Size size)
         {
             _location = location;
             _rectangle = new Rectangle(0 - size.Width / 2, 0 - size.Height / 2, size.Width, size.Height);
@@ -46,9 +46,9 @@ namespace Draw
 
         public bool Selected { get; set; }
 
-        public Point Location => _location;
+        public abstract void DrawShape(Graphics graphics, Brush fillBrush, Pen drawPen);
 
-        public virtual void Paint(Graphics graphics)
+        public void Draw(Graphics graphics)
         {
             var handleSize = 10;
             var halfHandleSize = handleSize / 2;
@@ -73,7 +73,7 @@ namespace Draw
             var handleBrush = new SolidBrush(Color.Black);
 
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.FillRectangle(fillBrush, _rectangle);
+            DrawShape(graphics, fillBrush, drawPen);
             if (this.Selected)
             {
                 graphics.FillRectangle(handleBrush, _topLeftHandle);
@@ -87,12 +87,11 @@ namespace Draw
                 graphics.FillRectangle(handleBrush, _centerHandle);
                 graphics.FillRectangle(handleBrush, _rotationHandle);
             }
-            graphics.DrawRectangle(drawPen, _rectangle);
 
             graphics.ResetTransform();
         }
 
-        public virtual void MouseDown(Control control, MouseEventArgs e)
+        public void DragStart(MouseEventArgs e)
         {
             _isClicked = true;
             _clickLocation = InvertTransformPoint(e.Location);
@@ -143,11 +142,9 @@ namespace Draw
             {
                 _activeHandle = Handle.None;
             }
-
-            control.Invalidate();
         }
 
-        public virtual void MouseMove(MouseEventArgs e)
+        public void Drag(MouseEventArgs e)
         {
             if (!_isClicked)
             {
@@ -233,7 +230,7 @@ namespace Draw
             _rectangle = new Rectangle(left, top, width, height);
         }
 
-        public virtual void MouseUp(MouseEventArgs e)
+        public void DragEnd(MouseEventArgs e)
         {
             _isClicked = false;
             _location = TransformPoint(_center);
