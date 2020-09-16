@@ -237,12 +237,20 @@ namespace Draw
             _rectangle = new Rectangle(0 - _rectangle.Width / 2, 0 - _rectangle.Height / 2, _rectangle.Width, _rectangle.Height);
         }
 
-        public virtual bool Contains(Point point)
+        public bool Contains(Point point)
         {
             var transformedPoint = InvertTransformPoint(point);
 
             return _rectangle.Contains(transformedPoint)
                 || (this.Selected && _rotationHandle.Contains(transformedPoint));
+        }
+
+        public Shape Copy()
+        {
+            var copy = this.MemberwiseClone() as Shape;
+            copy._location = new Point(_rectangle.Width / 2 + 20, _rectangle.Height / 2 + 20);
+
+            return copy;
         }
 
         private Matrix GetTransformation()

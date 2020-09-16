@@ -8,6 +8,8 @@ namespace Draw
 	/// </summary>
 	public class DialogProcessor : DisplayProcessor
 	{
+		private Shape _copiedShape;
+
 		#region Constructor
 		
 		public DialogProcessor()
@@ -122,6 +124,34 @@ namespace Draw
 		public void Clear()
         {
 			ShapeList.Clear();
+        }
+
+		public void CopyShape()
+        {
+            if (Selection != null)
+            {
+				_copiedShape = Selection;
+            }
+        }
+
+		public void PasteShape()
+        {
+            if (_copiedShape != null)
+            {
+				var newShape = _copiedShape.Copy();
+				ShapeList.Add(newShape);
+
+				Select(newShape);
+            }
+        }
+
+		public void DeleteShape()
+        {
+            if (Selection != null)
+            {
+				ShapeList.Remove(Selection);
+				Selection = null;
+            }
         }
 
 		private void GetRandomDimensions(out Point location, out Size size)

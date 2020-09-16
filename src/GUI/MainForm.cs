@@ -242,5 +242,22 @@ namespace Draw
 					return ImageFormat.Bmp;
             }
         }
+
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			dialogProcessor.CopyShape();
+        }
+
+        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			dialogProcessor.PasteShape();
+			viewPort.Invalidate();
+        }
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			dialogProcessor.DeleteShape();
+			viewPort.Invalidate();
+        }
     }
 }

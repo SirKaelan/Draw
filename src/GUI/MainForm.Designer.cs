@@ -36,6 +36,9 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,9 +120,37 @@
             // 
             // editToolStripMenuItem
             // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
             // imageToolStripMenuItem
             // 
@@ -223,7 +254,7 @@
             this.DrawRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DrawRectangle.Name = "DrawRectangle";
             this.DrawRectangle.Size = new System.Drawing.Size(29, 24);
-            this.DrawRectangle.Text = "DrawRectangleButton";
+            this.DrawRectangle.Text = "Draw Rectangle";
             this.DrawRectangle.Click += new System.EventHandler(this.DrawRectangleButtonClick);
             // 
             // DrawFilledRectangle
@@ -233,7 +264,7 @@
             this.DrawFilledRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DrawFilledRectangle.Name = "DrawFilledRectangle";
             this.DrawFilledRectangle.Size = new System.Drawing.Size(29, 24);
-            this.DrawFilledRectangle.Text = "toolStripButton1";
+            this.DrawFilledRectangle.Text = "Draw Filled Rectangle";
             this.DrawFilledRectangle.Click += new System.EventHandler(this.DrawFilledRectangle_Click);
             // 
             // DrawEllipse
@@ -243,7 +274,7 @@
             this.DrawEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DrawEllipse.Name = "DrawEllipse";
             this.DrawEllipse.Size = new System.Drawing.Size(29, 24);
-            this.DrawEllipse.Text = "toolStripButton2";
+            this.DrawEllipse.Text = "Draw Ellipse";
             this.DrawEllipse.Click += new System.EventHandler(this.DrawEllipse_Click);
             // 
             // DrawFilledEllipse
@@ -253,7 +284,7 @@
             this.DrawFilledEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DrawFilledEllipse.Name = "DrawFilledEllipse";
             this.DrawFilledEllipse.Size = new System.Drawing.Size(29, 24);
-            this.DrawFilledEllipse.Text = "toolStripButton3";
+            this.DrawFilledEllipse.Text = "Draw Filled Ellipse";
             this.DrawFilledEllipse.Click += new System.EventHandler(this.DrawFilledEllipse_Click);
             // 
             // viewPort
@@ -318,5 +349,8 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
