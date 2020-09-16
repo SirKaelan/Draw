@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using Draw.src.GUI.Dialogs;
 
 namespace Draw
 {
@@ -25,7 +26,7 @@ namespace Draw
 		{
 			InitializeComponent();
 
-			SelectedColor.BackColor = Color.IndianRed;
+			ColorPickerButton.BackColor = Color.IndianRed;
 			ColorPickerDialog.Color = Color.IndianRed;
 		}
 
@@ -68,7 +69,7 @@ namespace Draw
 				statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
             }
 
-            if (ColorPicker.Checked)
+            if (ColorBucketButton.Checked)
             {
 				shape.FillColor = ColorPickerDialog.Color;
 				shape.BorderColor = ColorPickerDialog.Color;
@@ -120,7 +121,7 @@ namespace Draw
 		private void SelectedColor_Click(object sender, EventArgs e)
 		{
 			ColorPickerDialog.ShowDialog();
-			SelectedColor.BackColor = ColorPickerDialog.Color;
+			ColorPickerButton.BackColor = ColorPickerDialog.Color;
 		}
 
 		/// <summary>
@@ -129,49 +130,29 @@ namespace Draw
 		/// </summary>
 		void DrawRectangleButtonClick(object sender, EventArgs e)
 		{
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomRectangle(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
-
-			viewPort.Invalidate();
+			DrawEmptyRectangle();
 		}
 
 		private void DrawFilledRectangle_Click(object sender, EventArgs e)
         {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFilledRectangle(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен правоъгълник";
-
-			viewPort.Invalidate();
+			DrawFilledRectangle();
 		}
 
         private void DrawEllipse_Click(object sender, EventArgs e)
         {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomElipse(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
-
-			viewPort.Invalidate();
+			DrawEllipse();
 		}
 
         private void DrawFilledEllipse_Click(object sender, EventArgs e)
         {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFilledElipse(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнена елипса";
-
-			viewPort.Invalidate();
+			DrawFilledEllipse();
 		}
 
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             if (dialogProcessor.ShapeList.Count != 0)
             {
-				var shouldSave = MessageBox.Show("Желаете ли да запазите изображението?", "Запазване", MessageBoxButtons.YesNo);
+				var shouldSave = MessageBox.Show("Do you wish to save the image?", "Save Image", MessageBoxButtons.YesNo);
 				if (shouldSave == DialogResult.Yes)
 				{
 					SaveAsToolStripMenuItem_Click(sender, e);
@@ -257,6 +238,85 @@ namespace Draw
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			dialogProcessor.DeleteShape();
+			viewPort.Invalidate();
+        }
+
+        private void RectangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawEmptyRectangle();
+        }
+
+		private void DrawEmptyRectangle()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomRectangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledRectangle()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledRectangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен правоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+        private void EllipseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawEllipse();
+        }
+
+		private void DrawEllipse()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomElipse(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledEllipse()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledElipse(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнена елипса";
+
+			viewPort.Invalidate();
+		}
+
+        private void FilledEllipseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawFilledEllipse();
+        }
+
+        private void FilledRectangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawFilledRectangle();
+        }
+
+        private void RotateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection == null)
+            {
+				MessageBox.Show("Select a shape to rotate", "Rotate");
+				return;
+            }
+
+            using (var rotateDialog = new RotateDialog(dialogProcessor.Selection.Rotation))
+            {
+                if (rotateDialog.ShowDialog() == DialogResult.OK)
+                {
+					dialogProcessor.Selection.Rotation = rotateDialog.Degrees;
+                }
+            }
+
 			viewPort.Invalidate();
         }
     }

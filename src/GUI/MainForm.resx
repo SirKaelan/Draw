@@ -141,7 +141,7 @@
         Mpx2Gp1BLgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="ColorPicker.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ColorBucketButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAQ3SURBVGhD7dpbqBVVHMfxY5DlQw9alKCJmlYPJl7wgnkp
@@ -165,7 +165,7 @@
         C5+m/p/geVQreuOj37D0TrGRRhrJlaam/wAPXv1j0UJ5HgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="DrawRectangle.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DrawRectangleButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACkSURBVGhD7c4xCsQADAPB/P/Td02qYDBTCFxoQOWCnqqq
@@ -174,7 +174,7 @@
         bTVFl1ZVVfV6nj8T1f4QlDsZvQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="DrawFilledRectangle.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DrawFilledRectangleButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACgSURBVGhD7dgxCsNAEMXQPbyTMztVvIakCQK1CswDlR+m
@@ -183,7 +183,7 @@
         jDHG+FjrAo5Z+SPWr9RTAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="DrawEllipse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DrawEllipseButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANeSURBVGhD7ZlHi1RBFEbbhAEUXJkFUVDRPyCCAXVhTgvD
@@ -204,7 +204,7 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <data name="DrawFilledEllipse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DrawFilledEllipseButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAH+SURBVGhD7dnbShVRHMfxCUslO+mtUm9hKJId8AEU8yUk
