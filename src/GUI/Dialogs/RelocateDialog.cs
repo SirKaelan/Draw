@@ -43,9 +43,9 @@ namespace Draw.src.GUI.Dialogs
             // OkButton
             // 
             this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OkButton.Location = new System.Drawing.Point(42, 185);
+            this.OkButton.Location = new System.Drawing.Point(42, 173);
             this.OkButton.Name = "OkButton";
-            this.OkButton.Size = new System.Drawing.Size(75, 23);
+            this.OkButton.Size = new System.Drawing.Size(75, 36);
             this.OkButton.TabIndex = 0;
             this.OkButton.Text = "OK";
             this.OkButton.UseVisualStyleBackColor = true;
@@ -53,9 +53,9 @@ namespace Draw.src.GUI.Dialogs
             // CancelActionButton
             // 
             this.CancelActionButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelActionButton.Location = new System.Drawing.Point(157, 185);
+            this.CancelActionButton.Location = new System.Drawing.Point(157, 173);
             this.CancelActionButton.Name = "CancelActionButton";
-            this.CancelActionButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelActionButton.Size = new System.Drawing.Size(75, 36);
             this.CancelActionButton.TabIndex = 1;
             this.CancelActionButton.Text = "Cancel";
             this.CancelActionButton.UseVisualStyleBackColor = true;

@@ -467,5 +467,27 @@ namespace Draw
 
 			viewPort.Invalidate();
 		}
+
+        private void BorderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to change border", "Border");
+				return;
+			}
+
+			var currentBorderWidth = dialogProcessor.Selection.BorderWidth;
+			var currentBorderColor = dialogProcessor.Selection.BorderColor;
+			using (var borderDialog = new BorderDialog(currentBorderWidth, currentBorderColor))
+			{
+				if (borderDialog.ShowDialog() == DialogResult.OK)
+				{
+					dialogProcessor.Selection.BorderWidth = borderDialog.BorderWidth;
+					dialogProcessor.Selection.BorderColor = borderDialog.BorderColor;
+				}
+			}
+
+			viewPort.Invalidate();
+		}
     }
 }
