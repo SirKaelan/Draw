@@ -25,17 +25,18 @@ namespace Draw
 		/// Списък с всички елементи формиращи изображението.
 		/// </summary>
 		public List<Shape> ShapeList { get; } = new List<Shape>();
-		
+
 		#endregion
-		
+
 		#region Drawing
-		
+
 		/// <summary>
 		/// Прерисува всички елементи в shapeList върху e.Graphics
 		/// </summary>
 		public void ReDraw(object sender, PaintEventArgs e)
 		{
 			e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
 			Draw(e.Graphics);
 		}
 		

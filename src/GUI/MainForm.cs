@@ -319,5 +319,52 @@ namespace Draw
 
 			viewPort.Invalidate();
         }
-    }
+
+        private void ResizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to resize", "Resize");
+				return;
+			}
+
+			var currentWidth = dialogProcessor.Selection.Rectangle.Width;
+			var currentHeight = dialogProcessor.Selection.Rectangle.Height;
+			using (var resizeDialog = new ResizeDialog(currentWidth, currentHeight))
+            {
+                if (resizeDialog.ShowDialog() == DialogResult.OK)
+                {
+					dialogProcessor.Selection.SetSize(new Size(resizeDialog.ShapeWidth, resizeDialog.ShapeHeight));
+                }
+            }
+
+			viewPort.Invalidate();
+		}
+
+        private void RelocateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to relocate", "Relocate");
+				return;
+			}
+
+			var currentX = dialogProcessor.Selection.Location.X;
+			var currentY = dialogProcessor.Selection.Location.Y;
+            using (var relocateDialog = new RelocateDialog(currentX, currentY))
+            {
+                if (relocateDialog.ShowDialog() == DialogResult.OK)
+                {
+					dialogProcessor.Selection.Location = new Point(relocateDialog.XCoord, relocateDialog.YCoord);
+                }
+            }
+
+			viewPort.Invalidate();
+		}
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+		}
+	}
 }

@@ -7,7 +7,7 @@ namespace Draw.src.GUI.Dialogs
         private Label DegreesLabel;
         private NumericUpDown RotationInput;
         private Button OkButton;
-        private Button CancelRotateButton;
+        private Button CancelActionButton;
 
         public RotateDialog()
         {
@@ -26,7 +26,7 @@ namespace Draw.src.GUI.Dialogs
         private void InitializeComponent()
         {
             this.OkButton = new System.Windows.Forms.Button();
-            this.CancelRotateButton = new System.Windows.Forms.Button();
+            this.CancelActionButton = new System.Windows.Forms.Button();
             this.RotationInput = new System.Windows.Forms.NumericUpDown();
             this.DegreesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.RotationInput)).BeginInit();
@@ -42,15 +42,15 @@ namespace Draw.src.GUI.Dialogs
             this.OkButton.Text = "OK";
             this.OkButton.UseVisualStyleBackColor = true;
             // 
-            // CancelRotateButton
+            // CancelActionButton
             // 
-            this.CancelRotateButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelRotateButton.Location = new System.Drawing.Point(161, 110);
-            this.CancelRotateButton.Name = "CancelRotateButton";
-            this.CancelRotateButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelRotateButton.TabIndex = 1;
-            this.CancelRotateButton.Text = "Cancel";
-            this.CancelRotateButton.UseVisualStyleBackColor = true;
+            this.CancelActionButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.CancelActionButton.Location = new System.Drawing.Point(161, 110);
+            this.CancelActionButton.Name = "CancelActionButton";
+            this.CancelActionButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelActionButton.TabIndex = 1;
+            this.CancelActionButton.Text = "Cancel";
+            this.CancelActionButton.UseVisualStyleBackColor = true;
             // 
             // RotationInput
             // 
@@ -81,11 +81,11 @@ namespace Draw.src.GUI.Dialogs
             // RotateDialog
             // 
             this.AcceptButton = this.OkButton;
-            this.CancelButton = this.CancelRotateButton;
+            this.CancelButton = this.CancelActionButton;
             this.ClientSize = new System.Drawing.Size(282, 184);
             this.Controls.Add(this.DegreesLabel);
             this.Controls.Add(this.RotationInput);
-            this.Controls.Add(this.CancelRotateButton);
+            this.Controls.Add(this.CancelActionButton);
             this.Controls.Add(this.OkButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;

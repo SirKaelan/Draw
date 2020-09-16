@@ -8,9 +8,6 @@ namespace Draw
 {
     public abstract class Shape
 	{
-        private Point _location;
-        protected Rectangle _rectangle;
-
         private Point _center;
         private Rectangle _centerHandle;
         private Rectangle _rotationHandle;
@@ -30,15 +27,17 @@ namespace Draw
 
         protected Shape(Point location, Size size)
         {
-            _location = location;
-            _rectangle = new Rectangle(0 - size.Width / 2, 0 - size.Height / 2, size.Width, size.Height);
+            Location = location;
+            SetSize(size);
 
-            this.Rotation = 0;
-            this.FillColor = Color.IndianRed;
-            this.BorderColor = Color.Black;
-            this.BorderWidth = 1;
+            Rotation = 0;
+            FillColor = Color.IndianRed;
+            BorderColor = Color.Black;
+            BorderWidth = 1;
         }
 
+        public Point Location { get; set; }
+        public Rectangle Rectangle { get; private set; }
         public float Rotation { get; set; }
         public Color FillColor { get; set; }
         public Color BorderColor { get; set; }
@@ -52,17 +51,17 @@ namespace Draw
         {
             var handleSize = 10;
             var halfHandleSize = handleSize / 2;
-            _topLeftHandle = new Rectangle(_rectangle.Left, _rectangle.Top, handleSize, handleSize);
-            _topMiddleHandle = new Rectangle(_rectangle.Left + (_rectangle.Width / 2) - halfHandleSize, _rectangle.Top, handleSize, handleSize);
-            _topRightHandle = new Rectangle(_rectangle.Left + _rectangle.Width - handleSize, _rectangle.Top, handleSize, handleSize);
-            _bottomLeftHandle = new Rectangle(_rectangle.Left, _rectangle.Top + _rectangle.Height - handleSize, handleSize, handleSize);
-            _bottomMiddleHandle = new Rectangle(_rectangle.Left + (_rectangle.Width / 2) - halfHandleSize, _rectangle.Top + _rectangle.Height - handleSize, handleSize, handleSize);
-            _bottomRightHandle = new Rectangle(_rectangle.Left + _rectangle.Width - handleSize, _rectangle.Top + _rectangle.Height - handleSize, handleSize, handleSize);
-            _middleLeftHandle = new Rectangle(_rectangle.Left, _rectangle.Top + (_rectangle.Height / 2) - halfHandleSize, handleSize, handleSize);
-            _middleRightHandle = new Rectangle(_rectangle.Left + _rectangle.Width - handleSize, _rectangle.Top + (_rectangle.Height / 2) - halfHandleSize, handleSize, handleSize);
-            _centerHandle = new Rectangle(_rectangle.Left + (_rectangle.Width / 2) - halfHandleSize, _rectangle.Top + (_rectangle.Height / 2) - halfHandleSize, handleSize, handleSize);
-            _rotationHandle = new Rectangle(_rectangle.Left + (_rectangle.Width / 2) - halfHandleSize, _rectangle.Top - (handleSize * 2), handleSize, handleSize);
-            _center = new Point(_rectangle.Left + (_rectangle.Width / 2), _rectangle.Top + (_rectangle.Height / 2));
+            _topLeftHandle = new Rectangle(Rectangle.Left, Rectangle.Top, handleSize, handleSize);
+            _topMiddleHandle = new Rectangle(Rectangle.Left + (Rectangle.Width / 2) - halfHandleSize, Rectangle.Top, handleSize, handleSize);
+            _topRightHandle = new Rectangle(Rectangle.Left + Rectangle.Width - handleSize, Rectangle.Top, handleSize, handleSize);
+            _bottomLeftHandle = new Rectangle(Rectangle.Left, Rectangle.Top + Rectangle.Height - handleSize, handleSize, handleSize);
+            _bottomMiddleHandle = new Rectangle(Rectangle.Left + (Rectangle.Width / 2) - halfHandleSize, Rectangle.Top + Rectangle.Height - handleSize, handleSize, handleSize);
+            _bottomRightHandle = new Rectangle(Rectangle.Left + Rectangle.Width - handleSize, Rectangle.Top + Rectangle.Height - handleSize, handleSize, handleSize);
+            _middleLeftHandle = new Rectangle(Rectangle.Left, Rectangle.Top + (Rectangle.Height / 2) - halfHandleSize, handleSize, handleSize);
+            _middleRightHandle = new Rectangle(Rectangle.Left + Rectangle.Width - handleSize, Rectangle.Top + (Rectangle.Height / 2) - halfHandleSize, handleSize, handleSize);
+            _centerHandle = new Rectangle(Rectangle.Left + (Rectangle.Width / 2) - halfHandleSize, Rectangle.Top + (Rectangle.Height / 2) - halfHandleSize, handleSize, handleSize);
+            _rotationHandle = new Rectangle(Rectangle.Left + (Rectangle.Width / 2) - halfHandleSize, Rectangle.Top - (handleSize * 2), handleSize, handleSize);
+            _center = new Point(Rectangle.Left + (Rectangle.Width / 2), Rectangle.Top + (Rectangle.Height / 2));
 
 
             var matrix = GetTransformation();
@@ -95,7 +94,7 @@ namespace Draw
         {
             _isClicked = true;
             _clickLocation = InvertTransformPoint(e.Location);
-            _initialRectangle = _rectangle;
+            _initialRectangle = Rectangle;
             _activeHandle = Handle.None;
 
             if (_rotationHandle.Contains(_clickLocation))
@@ -134,7 +133,7 @@ namespace Draw
             {
                 _activeHandle = Handle.BottomRight;
             }
-            else if (_rectangle.Contains(_clickLocation))
+            else if (Rectangle.Contains(_clickLocation))
             {
                 _activeHandle = Handle.Inside;
             }
@@ -227,28 +226,33 @@ namespace Draw
                 top -= distanceY;
             }
 
-            _rectangle = new Rectangle(left, top, width, height);
+            Rectangle = new Rectangle(left, top, width, height);
         }
 
         public void DragEnd(MouseEventArgs e)
         {
             _isClicked = false;
-            _location = TransformPoint(_center);
-            _rectangle = new Rectangle(0 - _rectangle.Width / 2, 0 - _rectangle.Height / 2, _rectangle.Width, _rectangle.Height);
+            Location = TransformPoint(_center);
+            Rectangle = new Rectangle(0 - Rectangle.Width / 2, 0 - Rectangle.Height / 2, Rectangle.Width, Rectangle.Height);
+        }
+
+        public void SetSize(Size size)
+        {
+            Rectangle = new Rectangle(0 - size.Width / 2, 0 - size.Height / 2, size.Width, size.Height);
         }
 
         public bool Contains(Point point)
         {
             var transformedPoint = InvertTransformPoint(point);
 
-            return _rectangle.Contains(transformedPoint)
+            return Rectangle.Contains(transformedPoint)
                 || (this.Selected && _rotationHandle.Contains(transformedPoint));
         }
 
         public Shape Copy()
         {
             var copy = this.MemberwiseClone() as Shape;
-            copy._location = new Point(_rectangle.Width / 2 + 20, _rectangle.Height / 2 + 20);
+            copy.Location = new Point(Rectangle.Width / 2 + 20, Rectangle.Height / 2 + 20);
 
             return copy;
         }
@@ -256,7 +260,7 @@ namespace Draw
         private Matrix GetTransformation()
         {
             var matrix = new Matrix();
-            matrix.Translate(_location.X, _location.Y);
+            matrix.Translate(Location.X, Location.Y);
             matrix.Rotate(this.Rotation);
             return matrix;
         }

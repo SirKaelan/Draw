@@ -10,8 +10,8 @@ namespace Draw
 
         public override void DrawShape(Graphics graphics, Brush fillBrush, Pen drawPen)
         {
-            graphics.FillRectangle(fillBrush, _rectangle);
-            graphics.DrawRectangle(drawPen, _rectangle);
+            graphics.FillRectangle(fillBrush, Rectangle);
+            graphics.DrawRectangle(drawPen, Rectangle);
         }
     }
 }

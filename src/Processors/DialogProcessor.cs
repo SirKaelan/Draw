@@ -24,13 +24,13 @@ namespace Draw
 		/// Избран елемент.
 		/// </summary>
 		public Shape Selection { get; private set; }
-		
-		#endregion
-		
-		/// <summary>
-		/// Добавя примитив - правоъгълник на произволно място върху клиентската област.
-		/// </summary>
-		public void AddRandomRectangle(Color borderColor)
+
+        #endregion
+
+        /// <summary>
+        /// Добавя примитив - правоъгълник на произволно място върху клиентската област.
+        /// </summary>
+        public void AddRandomRectangle(Color borderColor)
 		{
 			GetRandomDimensions(out var location, out var size);
 			var rect = new RectangleShape(location, size)
