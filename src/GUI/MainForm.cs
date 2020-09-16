@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace Draw
@@ -16,6 +17,9 @@ namespace Draw
 		private DialogProcessor dialogProcessor = new DialogProcessor();
 
 		private ColorDialog ColorPickerDialog = new ColorDialog();
+
+		private string _fileName;
+		private int _filterIndex;
 		
 		public MainForm()
 		{
@@ -162,5 +166,62 @@ namespace Draw
 
 			viewPort.Invalidate();
 		}
+
+		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            if (_fileName != null)
+            {
+				SaveFile(_fileName, _filterIndex);
+            }
+            else
+            {
+				SaveAsToolStripMenuItem_Click(sender, e);
+			}
+		}
+
+		private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = new SaveFileDialog
+            {
+                DefaultExt = "bmp",
+                Filter = "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+				_fileName = dialog.FileName;
+				_filterIndex = dialog.FilterIndex;
+				SaveFile(dialog.FileName, dialog.FilterIndex);
+			}
+        }
+
+		private void SaveFile(string fileName, int filterIndex)
+        {
+			using (var bmp = new Bitmap(viewPort.Width, viewPort.Height))
+			using (var graphics = Graphics.FromImage(bmp))
+			using (var brush = new SolidBrush(Color.White))
+			{
+				graphics.FillRectangle(brush, new Rectangle(0, 0, viewPort.Width, viewPort.Height));
+				dialogProcessor.Draw(graphics);
+				bmp.Save(fileName, GetImageFormat(filterIndex));
+			}
+		}
+
+		private ImageFormat GetImageFormat(int filterIndex)
+        {
+            switch (filterIndex)
+            {
+				case 1:
+					return ImageFormat.Bmp;
+				case 2:
+					return ImageFormat.Jpeg;
+				case 3:
+					return ImageFormat.Png;
+				case 4:
+					return ImageFormat.Gif;
+                default:
+					return ImageFormat.Bmp;
+            }
+        }
     }
 }
