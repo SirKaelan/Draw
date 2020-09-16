@@ -35,6 +35,7 @@ namespace Draw
             FillColor = Color.IndianRed;
             BorderColor = Color.Black;
             BorderWidth = 1;
+            Opacity = 100;
         }
 
         public Point Location { get; set; }
@@ -43,6 +44,7 @@ namespace Draw
         public Color FillColor { get; set; }
         public Color BorderColor { get; set; }
         public float BorderWidth { get; set; }
+        public int Opacity { get; set; }
 
         public bool Selected { get; set; }
 
@@ -68,25 +70,27 @@ namespace Draw
             var matrix = GetTransformation();
             graphics.Transform = matrix;
 
-            var drawPen = new Pen(this.BorderColor, this.BorderWidth);
-            var fillBrush = new SolidBrush(this.FillColor);
-            var handleBrush = new SolidBrush(Color.Black);
-
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            DrawShape(graphics, fillBrush, drawPen);
-            if (this.Selected)
+            using (var drawPen = new Pen(GetColor(this.BorderColor), this.BorderWidth))
+            using (var fillBrush = new SolidBrush(GetColor(this.FillColor)))
+            using (var handleBrush = new SolidBrush(Color.Black))
             {
-                graphics.FillRectangle(handleBrush, _topLeftHandle);
-                graphics.FillRectangle(handleBrush, _topMiddleHandle);
-                graphics.FillRectangle(handleBrush, _topRightHandle);
-                graphics.FillRectangle(handleBrush, _bottomLeftHandle);
-                graphics.FillRectangle(handleBrush, _bottomMiddleHandle);
-                graphics.FillRectangle(handleBrush, _bottomRightHandle);
-                graphics.FillRectangle(handleBrush, _middleLeftHandle);
-                graphics.FillRectangle(handleBrush, _middleRightHandle);
-                graphics.FillRectangle(handleBrush, _centerHandle);
-                graphics.FillRectangle(handleBrush, _rotationHandle);
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                DrawShape(graphics, fillBrush, drawPen);
+                if (this.Selected)
+                {
+                    graphics.FillRectangle(handleBrush, _topLeftHandle);
+                    graphics.FillRectangle(handleBrush, _topMiddleHandle);
+                    graphics.FillRectangle(handleBrush, _topRightHandle);
+                    graphics.FillRectangle(handleBrush, _bottomLeftHandle);
+                    graphics.FillRectangle(handleBrush, _bottomMiddleHandle);
+                    graphics.FillRectangle(handleBrush, _bottomRightHandle);
+                    graphics.FillRectangle(handleBrush, _middleLeftHandle);
+                    graphics.FillRectangle(handleBrush, _middleRightHandle);
+                    graphics.FillRectangle(handleBrush, _centerHandle);
+                    graphics.FillRectangle(handleBrush, _rotationHandle);
+                }
             }
+
 
             graphics.ResetTransform();
         }
@@ -256,6 +260,16 @@ namespace Draw
             copy.Location = new Point(Rectangle.Width / 2 + 20, Rectangle.Height / 2 + 20);
 
             return copy;
+        }
+
+        private Color GetColor(Color color)
+        {
+            if (color == Color.Transparent)
+            {
+                return color;
+            }
+
+            return Color.FromArgb(Opacity * 255 / 100, color);
         }
 
         private Matrix GetTransformation()

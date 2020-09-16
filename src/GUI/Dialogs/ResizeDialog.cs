@@ -23,9 +23,9 @@ namespace Draw.src.GUI.Dialogs
             HeightInput.Value = initialHeigh;
         }
 
-        public int ShapeWidth { get { return (int)WidthInput.Value; } }
+        public int ShapeWidth => (int)WidthInput.Value;
 
-        public int ShapeHeight { get { return (int)HeightInput.Value; } }
+        public int ShapeHeight => (int)HeightInput.Value;
 
         #region Initialization
         private void InitializeComponent()

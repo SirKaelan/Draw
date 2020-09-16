@@ -433,5 +433,39 @@ namespace Draw
         {
 			return "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif|Work File (*.bin)|*.bin";
 		}
-	}
+
+        private void ColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to color", "Color");
+				return;
+			}
+
+            if (ColorPickerDialog.ShowDialog() == DialogResult.OK)
+            {
+				dialogProcessor.Selection.FillColor = ColorPickerDialog.Color;
+            }
+		}
+
+        private void OpacityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to change opacity", "Opacity");
+				return;
+			}
+
+			var currentOpacity = dialogProcessor.Selection.Opacity;
+			using (var opacityDialog = new OpacityDialog(currentOpacity))
+			{
+                if (opacityDialog.ShowDialog() == DialogResult.OK)
+                {
+					dialogProcessor.Selection.Opacity = opacityDialog.ShapeOpacity;
+                }
+			}
+
+			viewPort.Invalidate();
+		}
+    }
 }

@@ -43,6 +43,9 @@
     </Compile>
     <Compile Include="src\AssemblyInfo.cs" />
     <Compile Include="src\Enumerations\Handle.cs" />
+    <Compile Include="src\GUI\Dialogs\OpacityDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\GUI\Dialogs\RelocateDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +76,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\GUI\Dialogs\OpacityDialog.resx">
+      <DependentUpon>OpacityDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\GUI\Dialogs\RelocateDialog.resx">
       <DependentUpon>RelocateDialog.cs</DependentUpon>

@@ -23,9 +23,9 @@ namespace Draw.src.GUI.Dialogs
             YInput.Value = initialY;
         }
 
-        public int XCoord { get { return (int)XInput.Value; } }
+        public int XCoord => (int)XInput.Value;
 
-        public int YCoord { get { return (int)YInput.Value; } }
+        public int YCoord => (int)YInput.Value;
 
         #region Initialize
         private void InitializeComponent()

@@ -20,7 +20,7 @@ namespace Draw.src.GUI.Dialogs
             RotationInput.Value = (decimal)currentRotation;
         }
 
-        public float Degrees { get { return (float)RotationInput.Value;  } }
+        public float Degrees => (float)RotationInput.Value;
 
         #region Initialization
         private void InitializeComponent()
