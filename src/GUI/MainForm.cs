@@ -167,6 +167,23 @@ namespace Draw
 			viewPort.Invalidate();
 		}
 
+		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            if (dialogProcessor.ShapeList.Count != 0)
+            {
+				var shouldSave = MessageBox.Show("Желаете ли да запазите изображението?", "Запазване", MessageBoxButtons.YesNo);
+				if (shouldSave == DialogResult.Yes)
+				{
+					SaveAsToolStripMenuItem_Click(sender, e);
+				}
+            }
+
+			statusBar.Items[0].Text = "Последно действие: Нов екран";
+
+			dialogProcessor.Clear();
+			viewPort.Invalidate();
+		}
+
 		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             if (_fileName != null)
@@ -181,18 +198,18 @@ namespace Draw
 
 		private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog = new SaveFileDialog
+            using (var dialog = new SaveFileDialog())
             {
-                DefaultExt = "bmp",
-                Filter = "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif"
-            };
+				dialog.DefaultExt = "bmp";
+                dialog.Filter = "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif";
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-				_fileName = dialog.FileName;
-				_filterIndex = dialog.FilterIndex;
-				SaveFile(dialog.FileName, dialog.FilterIndex);
-			}
+				if (dialog.ShowDialog() == DialogResult.OK)
+				{
+					_fileName = dialog.FileName;
+					_filterIndex = dialog.FilterIndex;
+					SaveFile(dialog.FileName, dialog.FilterIndex);
+				}
+            }
         }
 
 		private void SaveFile(string fileName, int filterIndex)
@@ -205,6 +222,8 @@ namespace Draw
 				dialogProcessor.Draw(graphics);
 				bmp.Save(fileName, GetImageFormat(filterIndex));
 			}
+
+			statusBar.Items[0].Text = "Последно действие: Запазване на изображението";
 		}
 
 		private ImageFormat GetImageFormat(int filterIndex)

@@ -119,6 +119,11 @@ namespace Draw
 			Selection = null;
         }
 
+		public void Clear()
+        {
+			ShapeList.Clear();
+        }
+
 		private void GetRandomDimensions(out Point location, out Size size)
         {
 			var rnd = new Random();
