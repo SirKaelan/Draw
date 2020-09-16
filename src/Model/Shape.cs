@@ -6,6 +6,7 @@ using Draw.src.Enumerations;
 
 namespace Draw
 {
+    [Serializable]
     public abstract class Shape
 	{
         private Point _center;

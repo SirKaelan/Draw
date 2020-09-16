@@ -124,6 +124,8 @@ namespace Draw
 		public void Clear()
         {
 			ShapeList.Clear();
+			OpenedImage?.Dispose();
+			OpenedImage = null;
         }
 
 		public void CopyShape()

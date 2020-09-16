@@ -1,7 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Draw
 {
+    [Serializable]
     public class EllipseShape : Shape
     {
         public EllipseShape(Point location, Size size) : base(location, size)

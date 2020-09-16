@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Draw.src.GUI.Dialogs;
 
@@ -182,7 +185,7 @@ namespace Draw
             using (var dialog = new SaveFileDialog())
             {
 				dialog.DefaultExt = "bmp";
-                dialog.Filter = "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif";
+                dialog.Filter = GetFileTypeFilter();
 
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
@@ -195,16 +198,44 @@ namespace Draw
 
 		private void SaveFile(string fileName, int filterIndex)
         {
+			dialogProcessor.Deselect();
+
+			var imageFormat = GetImageFormat(filterIndex);
+            if (imageFormat != null)
+            {
+				SaveImage(fileName, imageFormat);
+            } 
+			else
+            {
+				SaveBinary(fileName);
+            }
+
+			viewPort.Invalidate();
+		}
+
+		private void SaveImage(string fileName, ImageFormat imageFormat)
+        {
 			using (var bmp = new Bitmap(viewPort.Width, viewPort.Height))
 			using (var graphics = Graphics.FromImage(bmp))
 			using (var brush = new SolidBrush(Color.White))
 			{
 				graphics.FillRectangle(brush, new Rectangle(0, 0, viewPort.Width, viewPort.Height));
 				dialogProcessor.Draw(graphics);
-				bmp.Save(fileName, GetImageFormat(filterIndex));
+				bmp.Save(fileName, imageFormat);
 			}
 
 			statusBar.Items[0].Text = "Последно действие: Запазване на изображението";
+		}
+
+		private void SaveBinary(string fileName)
+        {
+			using (var file = new FileStream(fileName, FileMode.Create))
+			{
+				var formatter = new BinaryFormatter();
+				formatter.Serialize(file, dialogProcessor.ShapeList);
+			}
+
+			statusBar.Items[0].Text = "Последно действие: Запазване на работен файл";
 		}
 
 		private ImageFormat GetImageFormat(int filterIndex)
@@ -220,7 +251,7 @@ namespace Draw
 				case 4:
 					return ImageFormat.Gif;
                 default:
-					return ImageFormat.Bmp;
+					return null;
             }
         }
 
@@ -364,7 +395,43 @@ namespace Draw
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+				openFileDialog.DefaultExt = "bmp";
+				openFileDialog.Filter = GetFileTypeFilter();
+				if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+					_fileName = openFileDialog.FileName;
+					_filterIndex = openFileDialog.FilterIndex;
+                    using (var file = openFileDialog.OpenFile() as FileStream)
+                    {
+                        if (file.Name.EndsWith(".bin"))
+                        {
+							var formatter = new BinaryFormatter();
+							var shapes = formatter.Deserialize(file) as List<Shape>;
+							dialogProcessor.ShapeList = shapes;
+							dialogProcessor.Deselect();
 
+							statusBar.Items[0].Text = "Последно действие: Отваряне на работен файл";
+                        }
+						else
+                        {
+							var image = Image.FromStream(file);
+							dialogProcessor.OpenedImage?.Dispose();
+							dialogProcessor.OpenedImage = image;
+
+							statusBar.Items[0].Text = "Последно действие: Отваряне на изображение";
+						}
+					}
+                }
+            }
+
+			viewPort.Invalidate();
+		}
+
+		private string GetFileTypeFilter()
+        {
+			return "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif|Work File (*.bin)|*.bin";
 		}
 	}
 }
