@@ -540,5 +540,165 @@ namespace Draw
         {
 			SetShapeBorder();
         }
+
+        private void TriangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawEmptyTriangle();
+        }
+
+		private void DrawEmptyTriangle()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomTriangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
+
+			viewPort.Invalidate();
+		}
+
+        private void FilledTriangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawFilledTriangle();
+        }
+
+		private void DrawFilledTriangle()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledTriangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен триъгълник";
+
+			viewPort.Invalidate();
+		}
+
+        private void PentagonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawEmptyPentagon();
+        }
+
+		private void DrawEmptyPentagon()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomPentagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на петоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledPentagon()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledPentagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен петоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawEmptyHexagon()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomHexagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledHexagon()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFillexHexagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен шестоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawEmptyPolygon()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomPolygon(color, 7);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на многоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledPolygon()
+        {
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledPolygon(color, 7);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен многоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+        private void FilledPentagonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawFilledPentagon();
+        }
+
+        private void HexagonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawEmptyHexagon();
+        }
+
+        private void FilledHexagonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawFilledHexagon();
+        }
+
+        private void PolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawEmptyPolygon();
+        }
+
+        private void FilledPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			DrawFilledPolygon();
+        }
+
+        private void DrawTriangleButton_Click(object sender, EventArgs e)
+        {
+			DrawEmptyTriangle();
+        }
+
+        private void DrawFilledTriangleButton_Click(object sender, EventArgs e)
+        {
+			DrawFilledTriangle();
+        }
+
+        private void DrawPentagonButton_Click(object sender, EventArgs e)
+        {
+			DrawEmptyPentagon();
+        }
+
+        private void DrawFilledPentagonButton_Click(object sender, EventArgs e)
+        {
+			DrawFilledPentagon();
+        }
+
+        private void DrawHexagonButton_Click(object sender, EventArgs e)
+        {
+			DrawEmptyHexagon();
+        }
+
+        private void DrawFilledHexagonButton_Click(object sender, EventArgs e)
+        {
+			DrawFilledHexagon();
+        }
+
+        private void DrawNPolygonButton_Click(object sender, EventArgs e)
+        {
+			DrawEmptyPolygon();
+        }
+
+        private void DrawFilledNPolygonButton_Click(object sender, EventArgs e)
+        {
+			DrawFilledPolygon();
+        }
     }
 }

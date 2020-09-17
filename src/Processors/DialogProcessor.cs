@@ -77,7 +77,61 @@ namespace Draw
 
 			ShapeList.Add(ellipse);
         }
-		
+
+		public void AddRandomTriangle(Color borderColor)
+        {
+			AddRandomPolygon(borderColor, 3);
+        }
+
+		public void AddRandomFilledTriangle(Color fillColor)
+		{
+			AddRandomFilledPolygon(fillColor, 3);
+		}
+
+		public void AddRandomPentagon(Color borderColor)
+        {
+			AddRandomPolygon(borderColor, 5);
+        }
+
+		public void AddRandomFilledPentagon(Color fillColor)
+        {
+			AddRandomFilledPolygon(fillColor, 5);
+        }
+
+		public void AddRandomHexagon(Color borderColor)
+        {
+			AddRandomPolygon(borderColor, 6);
+        }
+
+		public void AddRandomFillexHexagon(Color fillColor)
+        {
+			AddRandomFilledPolygon(fillColor, 6);
+        }
+
+		public void AddRandomPolygon(Color borderColor, int points)
+        {
+			GetRandomDimensions(out var location, out var size);
+			var triangle = new PolygonShape(location, size.Width, points)
+			{
+				FillColor = Color.Transparent,
+				BorderColor = borderColor,
+			};
+
+			ShapeList.Add(triangle);
+		}
+
+		public void AddRandomFilledPolygon(Color fillColor, int points)
+        {
+			GetRandomDimensions(out var location, out var size);
+			var triangle = new PolygonShape(location, size.Width, points)
+			{
+				FillColor = fillColor,
+				BorderColor = Color.Transparent,
+			};
+
+			ShapeList.Add(triangle);
+		}
+
 		/// <summary>
 		/// Проверява дали дадена точка е в елемента.
 		/// Обхожда в ред обратен на визуализацията с цел намиране на

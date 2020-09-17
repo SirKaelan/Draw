@@ -48,7 +48,12 @@
             this.filledEllipseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.triangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filledTriangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pentagonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filledPentagonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hexagonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filledHexagonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.polygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filledPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,16 +69,24 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ColorBucketButton = new System.Windows.Forms.ToolStripButton();
             this.ColorPickerButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.DrawRectangleButton = new System.Windows.Forms.ToolStripButton();
-            this.DrawFilledRectangleButton = new System.Windows.Forms.ToolStripButton();
-            this.DrawEllipseButton = new System.Windows.Forms.ToolStripButton();
-            this.DrawFilledEllipseButton = new System.Windows.Forms.ToolStripButton();
             this.RotateButton = new System.Windows.Forms.ToolStripButton();
             this.ResizeButton = new System.Windows.Forms.ToolStripButton();
             this.RelocateButton = new System.Windows.Forms.ToolStripButton();
             this.OpacityButton = new System.Windows.Forms.ToolStripButton();
             this.BorderButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.DrawRectangleButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledRectangleButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawEllipseButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledEllipseButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawTriangleButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledTriangleButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawPentagonButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledPentagonButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawHexagonButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledHexagonButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawNPolygonButton = new System.Windows.Forms.ToolStripButton();
+            this.DrawFilledNPolygonButton = new System.Windows.Forms.ToolStripButton();
             this.viewPort = new Draw.DoubleBufferedPanel();
             this.mainMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -205,7 +218,12 @@
             this.filledEllipseToolStripMenuItem,
             this.triangleToolStripMenuItem,
             this.filledTriangleToolStripMenuItem,
-            this.polygonToolStripMenuItem});
+            this.pentagonToolStripMenuItem,
+            this.filledPentagonToolStripMenuItem,
+            this.hexagonToolStripMenuItem,
+            this.filledHexagonToolStripMenuItem,
+            this.polygonToolStripMenuItem,
+            this.filledPolygonToolStripMenuItem});
             this.shapeToolStripMenuItem.Name = "shapeToolStripMenuItem";
             this.shapeToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
             this.shapeToolStripMenuItem.Text = "New &Shape";
@@ -253,6 +271,7 @@
             | System.Windows.Forms.Keys.T)));
             this.triangleToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
             this.triangleToolStripMenuItem.Text = "Triangle";
+            this.triangleToolStripMenuItem.Click += new System.EventHandler(this.TriangleToolStripMenuItem_Click);
             // 
             // filledTriangleToolStripMenuItem
             // 
@@ -261,14 +280,61 @@
             | System.Windows.Forms.Keys.G)));
             this.filledTriangleToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
             this.filledTriangleToolStripMenuItem.Text = "Filled Triangle";
+            this.filledTriangleToolStripMenuItem.Click += new System.EventHandler(this.FilledTriangleToolStripMenuItem_Click);
+            // 
+            // pentagonToolStripMenuItem
+            // 
+            this.pentagonToolStripMenuItem.Name = "pentagonToolStripMenuItem";
+            this.pentagonToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.P)));
+            this.pentagonToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
+            this.pentagonToolStripMenuItem.Text = "Pentagon";
+            this.pentagonToolStripMenuItem.Click += new System.EventHandler(this.PentagonToolStripMenuItem_Click);
+            // 
+            // filledPentagonToolStripMenuItem
+            // 
+            this.filledPentagonToolStripMenuItem.Name = "filledPentagonToolStripMenuItem";
+            this.filledPentagonToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.G)));
+            this.filledPentagonToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
+            this.filledPentagonToolStripMenuItem.Text = "Filled Pentagon";
+            this.filledPentagonToolStripMenuItem.Click += new System.EventHandler(this.FilledPentagonToolStripMenuItem_Click);
+            // 
+            // hexagonToolStripMenuItem
+            // 
+            this.hexagonToolStripMenuItem.Name = "hexagonToolStripMenuItem";
+            this.hexagonToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.H)));
+            this.hexagonToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
+            this.hexagonToolStripMenuItem.Text = "Hexagon";
+            this.hexagonToolStripMenuItem.Click += new System.EventHandler(this.HexagonToolStripMenuItem_Click);
+            // 
+            // filledHexagonToolStripMenuItem
+            // 
+            this.filledHexagonToolStripMenuItem.Name = "filledHexagonToolStripMenuItem";
+            this.filledHexagonToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.X)));
+            this.filledHexagonToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
+            this.filledHexagonToolStripMenuItem.Text = "Filled Hexagon";
+            this.filledHexagonToolStripMenuItem.Click += new System.EventHandler(this.FilledHexagonToolStripMenuItem_Click);
             // 
             // polygonToolStripMenuItem
             // 
             this.polygonToolStripMenuItem.Name = "polygonToolStripMenuItem";
             this.polygonToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.P)));
+            | System.Windows.Forms.Keys.N)));
             this.polygonToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
             this.polygonToolStripMenuItem.Text = "Polygon";
+            this.polygonToolStripMenuItem.Click += new System.EventHandler(this.PolygonToolStripMenuItem_Click);
+            // 
+            // filledPolygonToolStripMenuItem
+            // 
+            this.filledPolygonToolStripMenuItem.Name = "filledPolygonToolStripMenuItem";
+            this.filledPolygonToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.Y)));
+            this.filledPolygonToolStripMenuItem.Size = new System.Drawing.Size(278, 26);
+            this.filledPolygonToolStripMenuItem.Text = "Filled Polygon";
+            this.filledPolygonToolStripMenuItem.Click += new System.EventHandler(this.FilledPolygonToolStripMenuItem_Click);
             // 
             // colorToolStripMenuItem
             // 
@@ -372,7 +438,15 @@
             this.DrawRectangleButton,
             this.DrawFilledRectangleButton,
             this.DrawEllipseButton,
-            this.DrawFilledEllipseButton});
+            this.DrawFilledEllipseButton,
+            this.DrawTriangleButton,
+            this.DrawFilledTriangleButton,
+            this.DrawPentagonButton,
+            this.DrawFilledPentagonButton,
+            this.DrawHexagonButton,
+            this.DrawFilledHexagonButton,
+            this.DrawNPolygonButton,
+            this.DrawFilledNPolygonButton});
             this.speedMenu.Location = new System.Drawing.Point(0, 28);
             this.speedMenu.Name = "speedMenu";
             this.speedMenu.Size = new System.Drawing.Size(924, 27);
@@ -388,6 +462,7 @@
             this.PointerButton.Name = "PointerButton";
             this.PointerButton.Size = new System.Drawing.Size(29, 24);
             this.PointerButton.Text = "toolStripButton1";
+            this.PointerButton.ToolTipText = "Selector";
             // 
             // toolStripSeparator2
             // 
@@ -414,51 +489,6 @@
             this.ColorPickerButton.Text = "toolStripButton1";
             this.ColorPickerButton.ToolTipText = "Color Picker";
             this.ColorPickerButton.Click += new System.EventHandler(this.SelectedColor_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
-            // 
-            // DrawRectangleButton
-            // 
-            this.DrawRectangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DrawRectangleButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawRectangleButton.Image")));
-            this.DrawRectangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DrawRectangleButton.Name = "DrawRectangleButton";
-            this.DrawRectangleButton.Size = new System.Drawing.Size(29, 24);
-            this.DrawRectangleButton.Text = "Draw Rectangle";
-            this.DrawRectangleButton.Click += new System.EventHandler(this.DrawRectangleButtonClick);
-            // 
-            // DrawFilledRectangleButton
-            // 
-            this.DrawFilledRectangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DrawFilledRectangleButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledRectangleButton.Image")));
-            this.DrawFilledRectangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DrawFilledRectangleButton.Name = "DrawFilledRectangleButton";
-            this.DrawFilledRectangleButton.Size = new System.Drawing.Size(29, 24);
-            this.DrawFilledRectangleButton.Text = "Draw Filled Rectangle";
-            this.DrawFilledRectangleButton.Click += new System.EventHandler(this.DrawFilledRectangle_Click);
-            // 
-            // DrawEllipseButton
-            // 
-            this.DrawEllipseButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DrawEllipseButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawEllipseButton.Image")));
-            this.DrawEllipseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DrawEllipseButton.Name = "DrawEllipseButton";
-            this.DrawEllipseButton.Size = new System.Drawing.Size(29, 24);
-            this.DrawEllipseButton.Text = "Draw Ellipse";
-            this.DrawEllipseButton.Click += new System.EventHandler(this.DrawEllipse_Click);
-            // 
-            // DrawFilledEllipseButton
-            // 
-            this.DrawFilledEllipseButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DrawFilledEllipseButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledEllipseButton.Image")));
-            this.DrawFilledEllipseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DrawFilledEllipseButton.Name = "DrawFilledEllipseButton";
-            this.DrawFilledEllipseButton.Size = new System.Drawing.Size(29, 24);
-            this.DrawFilledEllipseButton.Text = "Draw Filled Ellipse";
-            this.DrawFilledEllipseButton.Click += new System.EventHandler(this.DrawFilledEllipse_Click);
             // 
             // RotateButton
             // 
@@ -514,6 +544,139 @@
             this.BorderButton.Text = "toolStripButton5";
             this.BorderButton.ToolTipText = "Border";
             this.BorderButton.Click += new System.EventHandler(this.BorderButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // DrawRectangleButton
+            // 
+            this.DrawRectangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawRectangleButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawRectangleButton.Image")));
+            this.DrawRectangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawRectangleButton.Name = "DrawRectangleButton";
+            this.DrawRectangleButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawRectangleButton.Text = "Draw Rectangle";
+            this.DrawRectangleButton.Click += new System.EventHandler(this.DrawRectangleButtonClick);
+            // 
+            // DrawFilledRectangleButton
+            // 
+            this.DrawFilledRectangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledRectangleButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledRectangleButton.Image")));
+            this.DrawFilledRectangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledRectangleButton.Name = "DrawFilledRectangleButton";
+            this.DrawFilledRectangleButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledRectangleButton.Text = "Draw Filled Rectangle";
+            this.DrawFilledRectangleButton.Click += new System.EventHandler(this.DrawFilledRectangle_Click);
+            // 
+            // DrawEllipseButton
+            // 
+            this.DrawEllipseButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawEllipseButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawEllipseButton.Image")));
+            this.DrawEllipseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawEllipseButton.Name = "DrawEllipseButton";
+            this.DrawEllipseButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawEllipseButton.Text = "Draw Ellipse";
+            this.DrawEllipseButton.Click += new System.EventHandler(this.DrawEllipse_Click);
+            // 
+            // DrawFilledEllipseButton
+            // 
+            this.DrawFilledEllipseButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledEllipseButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledEllipseButton.Image")));
+            this.DrawFilledEllipseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledEllipseButton.Name = "DrawFilledEllipseButton";
+            this.DrawFilledEllipseButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledEllipseButton.Text = "Draw Filled Ellipse";
+            this.DrawFilledEllipseButton.Click += new System.EventHandler(this.DrawFilledEllipse_Click);
+            // 
+            // DrawTriangleButton
+            // 
+            this.DrawTriangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawTriangleButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawTriangleButton.Image")));
+            this.DrawTriangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawTriangleButton.Name = "DrawTriangleButton";
+            this.DrawTriangleButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawTriangleButton.Text = "toolStripButton1";
+            this.DrawTriangleButton.ToolTipText = "Draw Triangle";
+            this.DrawTriangleButton.Click += new System.EventHandler(this.DrawTriangleButton_Click);
+            // 
+            // DrawFilledTriangleButton
+            // 
+            this.DrawFilledTriangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledTriangleButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledTriangleButton.Image")));
+            this.DrawFilledTriangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledTriangleButton.Name = "DrawFilledTriangleButton";
+            this.DrawFilledTriangleButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledTriangleButton.Text = "toolStripButton2";
+            this.DrawFilledTriangleButton.ToolTipText = "Draw Filled Triangle";
+            this.DrawFilledTriangleButton.Click += new System.EventHandler(this.DrawFilledTriangleButton_Click);
+            // 
+            // DrawPentagonButton
+            // 
+            this.DrawPentagonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawPentagonButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawPentagonButton.Image")));
+            this.DrawPentagonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawPentagonButton.Name = "DrawPentagonButton";
+            this.DrawPentagonButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawPentagonButton.Text = "toolStripButton3";
+            this.DrawPentagonButton.ToolTipText = "Draw Pentagon";
+            this.DrawPentagonButton.Click += new System.EventHandler(this.DrawPentagonButton_Click);
+            // 
+            // DrawFilledPentagonButton
+            // 
+            this.DrawFilledPentagonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledPentagonButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledPentagonButton.Image")));
+            this.DrawFilledPentagonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledPentagonButton.Name = "DrawFilledPentagonButton";
+            this.DrawFilledPentagonButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledPentagonButton.Text = "toolStripButton4";
+            this.DrawFilledPentagonButton.ToolTipText = "Draw Filled Pentagon";
+            this.DrawFilledPentagonButton.Click += new System.EventHandler(this.DrawFilledPentagonButton_Click);
+            // 
+            // DrawHexagonButton
+            // 
+            this.DrawHexagonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawHexagonButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawHexagonButton.Image")));
+            this.DrawHexagonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawHexagonButton.Name = "DrawHexagonButton";
+            this.DrawHexagonButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawHexagonButton.Text = "toolStripButton5";
+            this.DrawHexagonButton.ToolTipText = "Draw Hexagon";
+            this.DrawHexagonButton.Click += new System.EventHandler(this.DrawHexagonButton_Click);
+            // 
+            // DrawFilledHexagonButton
+            // 
+            this.DrawFilledHexagonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledHexagonButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledHexagonButton.Image")));
+            this.DrawFilledHexagonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledHexagonButton.Name = "DrawFilledHexagonButton";
+            this.DrawFilledHexagonButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledHexagonButton.Text = "toolStripButton6";
+            this.DrawFilledHexagonButton.ToolTipText = "Draw Filled Hexagon";
+            this.DrawFilledHexagonButton.Click += new System.EventHandler(this.DrawFilledHexagonButton_Click);
+            // 
+            // DrawNPolygonButton
+            // 
+            this.DrawNPolygonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawNPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawNPolygonButton.Image")));
+            this.DrawNPolygonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawNPolygonButton.Name = "DrawNPolygonButton";
+            this.DrawNPolygonButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawNPolygonButton.Text = "toolStripButton7";
+            this.DrawNPolygonButton.ToolTipText = "Draw N-sided Polygon";
+            this.DrawNPolygonButton.Click += new System.EventHandler(this.DrawNPolygonButton_Click);
+            // 
+            // DrawFilledNPolygonButton
+            // 
+            this.DrawFilledNPolygonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DrawFilledNPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("DrawFilledNPolygonButton.Image")));
+            this.DrawFilledNPolygonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DrawFilledNPolygonButton.Name = "DrawFilledNPolygonButton";
+            this.DrawFilledNPolygonButton.Size = new System.Drawing.Size(29, 24);
+            this.DrawFilledNPolygonButton.Text = "toolStripButton8";
+            this.DrawFilledNPolygonButton.ToolTipText = "Draw Filled N-sides Polygon";
+            this.DrawFilledNPolygonButton.Click += new System.EventHandler(this.DrawFilledNPolygonButton_Click);
             // 
             // viewPort
             // 
@@ -600,5 +763,18 @@
         private System.Windows.Forms.ToolStripButton RelocateButton;
         private System.Windows.Forms.ToolStripButton OpacityButton;
         private System.Windows.Forms.ToolStripButton BorderButton;
+        private System.Windows.Forms.ToolStripMenuItem pentagonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filledPentagonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hexagonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filledHexagonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filledPolygonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton DrawTriangleButton;
+        private System.Windows.Forms.ToolStripButton DrawFilledTriangleButton;
+        private System.Windows.Forms.ToolStripButton DrawPentagonButton;
+        private System.Windows.Forms.ToolStripButton DrawFilledPentagonButton;
+        private System.Windows.Forms.ToolStripButton DrawHexagonButton;
+        private System.Windows.Forms.ToolStripButton DrawFilledHexagonButton;
+        private System.Windows.Forms.ToolStripButton DrawNPolygonButton;
+        private System.Windows.Forms.ToolStripButton DrawFilledNPolygonButton;
     }
 }

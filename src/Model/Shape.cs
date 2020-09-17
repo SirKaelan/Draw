@@ -9,7 +9,7 @@ namespace Draw
     [Serializable]
     public abstract class Shape
 	{
-        private Point _center;
+        protected Point _center;
         private Rectangle _centerHandle;
         private Rectangle _rotationHandle;
         private Rectangle _topLeftHandle;
