@@ -56,12 +56,12 @@ namespace Draw.src.GUI.Dialogs
             // 
             this.RotationInput.Location = new System.Drawing.Point(116, 50);
             this.RotationInput.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
             this.RotationInput.Minimum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             -2147483648});

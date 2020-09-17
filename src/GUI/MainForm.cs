@@ -334,24 +334,34 @@ namespace Draw
 
         private void RotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dialogProcessor.Selection == null)
-            {
-				MessageBox.Show("Select a shape to rotate", "Rotate");
-				return;
-            }
-
-            using (var rotateDialog = new RotateDialog(dialogProcessor.Selection.Rotation))
-            {
-                if (rotateDialog.ShowDialog() == DialogResult.OK)
-                {
-					dialogProcessor.Selection.Rotation = rotateDialog.Degrees;
-                }
-            }
-
-			viewPort.Invalidate();
+			RotateShape();
         }
 
+		private void RotateShape()
+        {
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to rotate", "Rotate");
+				return;
+			}
+
+			using (var rotateDialog = new RotateDialog(dialogProcessor.Selection.Rotation))
+			{
+				if (rotateDialog.ShowDialog() == DialogResult.OK)
+				{
+					dialogProcessor.Selection.Rotation = rotateDialog.Degrees;
+				}
+			}
+
+			viewPort.Invalidate();
+		}
+
         private void ResizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			ResizeShape();
+		}
+
+		private void ResizeShape()
         {
 			if (dialogProcessor.Selection == null)
 			{
@@ -362,17 +372,22 @@ namespace Draw
 			var currentWidth = dialogProcessor.Selection.Rectangle.Width;
 			var currentHeight = dialogProcessor.Selection.Rectangle.Height;
 			using (var resizeDialog = new ResizeDialog(currentWidth, currentHeight))
-            {
-                if (resizeDialog.ShowDialog() == DialogResult.OK)
-                {
+			{
+				if (resizeDialog.ShowDialog() == DialogResult.OK)
+				{
 					dialogProcessor.Selection.SetSize(new Size(resizeDialog.ShapeWidth, resizeDialog.ShapeHeight));
-                }
-            }
+				}
+			}
 
 			viewPort.Invalidate();
 		}
 
         private void RelocateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			RelocateShape();
+		}
+
+		private void RelocateShape()
         {
 			if (dialogProcessor.Selection == null)
 			{
@@ -382,13 +397,13 @@ namespace Draw
 
 			var currentX = dialogProcessor.Selection.Location.X;
 			var currentY = dialogProcessor.Selection.Location.Y;
-            using (var relocateDialog = new RelocateDialog(currentX, currentY))
-            {
-                if (relocateDialog.ShowDialog() == DialogResult.OK)
-                {
+			using (var relocateDialog = new RelocateDialog(currentX, currentY))
+			{
+				if (relocateDialog.ShowDialog() == DialogResult.OK)
+				{
 					dialogProcessor.Selection.Location = new Point(relocateDialog.XCoord, relocateDialog.YCoord);
-                }
-            }
+				}
+			}
 
 			viewPort.Invalidate();
 		}
@@ -445,10 +460,16 @@ namespace Draw
             if (ColorPickerDialog.ShowDialog() == DialogResult.OK)
             {
 				dialogProcessor.Selection.FillColor = ColorPickerDialog.Color;
+				dialogProcessor.Selection.BorderColor = ColorPickerDialog.Color;
             }
 		}
 
         private void OpacityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			SetShapeOpacity();
+		}
+
+		private void SetShapeOpacity()
         {
 			if (dialogProcessor.Selection == null)
 			{
@@ -459,16 +480,21 @@ namespace Draw
 			var currentOpacity = dialogProcessor.Selection.Opacity;
 			using (var opacityDialog = new OpacityDialog(currentOpacity))
 			{
-                if (opacityDialog.ShowDialog() == DialogResult.OK)
-                {
+				if (opacityDialog.ShowDialog() == DialogResult.OK)
+				{
 					dialogProcessor.Selection.Opacity = opacityDialog.ShapeOpacity;
-                }
+				}
 			}
 
 			viewPort.Invalidate();
 		}
 
         private void BorderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			SetShapeBorder();
+		}
+
+		private void SetShapeBorder()
         {
 			if (dialogProcessor.Selection == null)
 			{
@@ -489,5 +515,30 @@ namespace Draw
 
 			viewPort.Invalidate();
 		}
+
+        private void RotateButton_Click(object sender, EventArgs e)
+        {
+			RotateShape();
+        }
+
+        private void ResizeButton_Click(object sender, EventArgs e)
+        {
+			ResizeShape();
+        }
+
+        private void RelocateButton_Click(object sender, EventArgs e)
+        {
+			RelocateShape();
+        }
+
+        private void OpacityButton_Click(object sender, EventArgs e)
+        {
+			SetShapeOpacity();
+        }
+
+        private void BorderButton_Click(object sender, EventArgs e)
+        {
+			SetShapeBorder();
+        }
     }
 }
