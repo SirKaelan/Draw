@@ -49,6 +49,9 @@
     <Compile Include="src\GUI\Dialogs\OpacityDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\GUI\Dialogs\PolygonSidesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\GUI\Dialogs\RelocateDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\GUI\Dialogs\OpacityDialog.resx">
       <DependentUpon>OpacityDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\GUI\Dialogs\PolygonSidesDialog.resx">
+      <DependentUpon>PolygonSidesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\GUI\Dialogs\RelocateDialog.resx">
       <DependentUpon>RelocateDialog.cs</DependentUpon>

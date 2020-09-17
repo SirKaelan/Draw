@@ -618,22 +618,36 @@ namespace Draw
 
 		private void DrawEmptyPolygon()
         {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomPolygon(color, 7);
+            using (var polygonSidesDialog = new PolygonSidesDialog())
+            {
+                if (polygonSidesDialog.ShowDialog() == DialogResult.OK)
+                {
+					var color = ColorPickerDialog.Color;
+					var sides = polygonSidesDialog.Sides;
+					dialogProcessor.AddRandomPolygon(color, sides);
 
-			statusBar.Items[0].Text = "Последно действие: Рисуване на многоъгълник";
+					statusBar.Items[0].Text = "Последно действие: Рисуване на многоъгълник";
 
-			viewPort.Invalidate();
+					viewPort.Invalidate();
+                }
+            }
 		}
 
 		private void DrawFilledPolygon()
         {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFilledPolygon(color, 7);
+			using (var polygonSidesDialog = new PolygonSidesDialog())
+			{
+				if (polygonSidesDialog.ShowDialog() == DialogResult.OK)
+				{
+					var color = ColorPickerDialog.Color;
+					var sides = polygonSidesDialog.Sides;
+					dialogProcessor.AddRandomFilledPolygon(color, sides);
 
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен многоъгълник";
+					statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен многоъгълник";
 
-			viewPort.Invalidate();
+					viewPort.Invalidate();
+				}
+			}
 		}
 
         private void FilledPentagonToolStripMenuItem_Click(object sender, EventArgs e)
