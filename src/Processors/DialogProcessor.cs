@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Draw
@@ -244,10 +245,17 @@ namespace Draw
         {
             if (_copiedShape != null)
             {
-				var newShape = _copiedShape.Copy();
-				ShapeList.Add(newShape);
-
-				Select(newShape);
+                if (_copiedShape is GroupShape gs)
+                {
+					var shapes = gs.CopyShapes();
+					ShapeList.AddRange(shapes);
+                }
+				else
+                {
+					var newShape = _copiedShape.Copy();
+					ShapeList.Add(newShape);
+					Select(newShape);
+                }
             }
         }
 
@@ -255,6 +263,11 @@ namespace Draw
         {
             if (Selection != null)
             {
+                if (Selection is GroupShape)
+                {
+					_group = null;
+                }
+
 				ShapeList.Remove(Selection);
 				Selection = null;
             }

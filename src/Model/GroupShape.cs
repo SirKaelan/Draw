@@ -181,5 +181,16 @@ namespace Draw
 
             return groupShape;
         }
+
+        public List<Shape> CopyShapes()
+        {
+            var shapes = new List<Shape>();
+            foreach (var shape in _shapes)
+            {
+                shapes.Add(shape.Copy());
+            }
+
+            return shapes;
+        }
     }
 }

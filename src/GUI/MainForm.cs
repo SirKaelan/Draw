@@ -33,6 +33,7 @@ namespace Draw
 			ColorPickerDialog.Color = Color.IndianRed;
 		}
 
+        #region Event Handlers
         /// <summary>
         /// Изход от програмата. Затваря главната форма, а с това и програмата.
         /// </summary>
@@ -137,30 +138,6 @@ namespace Draw
 			ColorPickerButton.BackColor = ColorPickerDialog.Color;
 		}
 
-		/// <summary>
-		/// Бутон, който поставя на произволно място правоъгълник със зададените размери.
-		/// Променя се лентата със състоянието и се инвалидира контрола, в който визуализираме.
-		/// </summary>
-		void DrawRectangleButtonClick(object sender, EventArgs e)
-		{
-			DrawEmptyRectangle();
-		}
-
-		private void DrawFilledRectangle_Click(object sender, EventArgs e)
-        {
-			DrawFilledRectangle();
-		}
-
-        private void DrawEllipse_Click(object sender, EventArgs e)
-        {
-			DrawEllipse();
-		}
-
-        private void DrawFilledEllipse_Click(object sender, EventArgs e)
-        {
-			DrawFilledEllipse();
-		}
-
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             if (dialogProcessor.ShapeList.Count != 0)
@@ -206,65 +183,6 @@ namespace Draw
             }
         }
 
-		private void SaveFile(string fileName, int filterIndex)
-        {
-			dialogProcessor.Deselect();
-
-			var imageFormat = GetImageFormat(filterIndex);
-            if (imageFormat != null)
-            {
-				SaveImage(fileName, imageFormat);
-            } 
-			else
-            {
-				SaveBinary(fileName);
-            }
-
-			viewPort.Invalidate();
-		}
-
-		private void SaveImage(string fileName, ImageFormat imageFormat)
-        {
-			using (var bmp = new Bitmap(viewPort.Width, viewPort.Height))
-			using (var graphics = Graphics.FromImage(bmp))
-			using (var brush = new SolidBrush(Color.White))
-			{
-				graphics.FillRectangle(brush, new Rectangle(0, 0, viewPort.Width, viewPort.Height));
-				dialogProcessor.Draw(graphics);
-				bmp.Save(fileName, imageFormat);
-			}
-
-			statusBar.Items[0].Text = "Последно действие: Запазване на изображението";
-		}
-
-		private void SaveBinary(string fileName)
-        {
-			using (var file = new FileStream(fileName, FileMode.Create))
-			{
-				var formatter = new BinaryFormatter();
-				formatter.Serialize(file, dialogProcessor.ShapeList);
-			}
-
-			statusBar.Items[0].Text = "Последно действие: Запазване на работен файл";
-		}
-
-		private ImageFormat GetImageFormat(int filterIndex)
-        {
-            switch (filterIndex)
-            {
-				case 1:
-					return ImageFormat.Bmp;
-				case 2:
-					return ImageFormat.Jpeg;
-				case 3:
-					return ImageFormat.Png;
-				case 4:
-					return ImageFormat.Gif;
-                default:
-					return null;
-            }
-        }
-
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			dialogProcessor.CopyShape();
@@ -282,55 +200,39 @@ namespace Draw
 			viewPort.Invalidate();
         }
 
-        private void RectangleToolStripMenuItem_Click(object sender, EventArgs e)
+		/// <summary>
+		/// Бутон, който поставя на произволно място правоъгълник със зададените размери.
+		/// Променя се лентата със състоянието и се инвалидира контрола, в който визуализираме.
+		/// </summary>
+		void DrawRectangleButtonClick(object sender, EventArgs e)
+		{
+			DrawEmptyRectangle();
+		}
+
+		private void DrawFilledRectangle_Click(object sender, EventArgs e)
+		{
+			DrawFilledRectangle();
+		}
+
+		private void DrawEllipse_Click(object sender, EventArgs e)
+		{
+			DrawEllipse();
+		}
+
+		private void DrawFilledEllipse_Click(object sender, EventArgs e)
+		{
+			DrawFilledEllipse();
+		}
+
+		private void RectangleToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			DrawEmptyRectangle();
         }
-
-		private void DrawEmptyRectangle()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomRectangle(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
-
-			viewPort.Invalidate();
-		}
-
-		private void DrawFilledRectangle()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFilledRectangle(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен правоъгълник";
-
-			viewPort.Invalidate();
-		}
 
         private void EllipseToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			DrawEllipse();
         }
-
-		private void DrawEllipse()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomElipse(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
-
-			viewPort.Invalidate();
-		}
-
-		private void DrawFilledEllipse()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFilledElipse(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнена елипса";
-
-			viewPort.Invalidate();
-		}
 
         private void FilledEllipseToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -347,49 +249,9 @@ namespace Draw
 			RotateShape();
         }
 
-		private void RotateShape()
-        {
-			if (dialogProcessor.Selection == null)
-			{
-				MessageBox.Show("Select a shape to rotate", "Rotate");
-				return;
-			}
-
-			using (var rotateDialog = new RotateDialog(dialogProcessor.Selection.Rotation))
-			{
-				if (rotateDialog.ShowDialog() == DialogResult.OK)
-				{
-					dialogProcessor.Selection.Rotation = rotateDialog.Degrees;
-				}
-			}
-
-			viewPort.Invalidate();
-		}
-
         private void ResizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			ResizeShape();
-		}
-
-		private void ResizeShape()
-        {
-			if (dialogProcessor.Selection == null)
-			{
-				MessageBox.Show("Select a shape to resize", "Resize");
-				return;
-			}
-
-			var currentWidth = dialogProcessor.Selection.Rectangle.Width;
-			var currentHeight = dialogProcessor.Selection.Rectangle.Height;
-			using (var resizeDialog = new ResizeDialog(currentWidth, currentHeight))
-			{
-				if (resizeDialog.ShowDialog() == DialogResult.OK)
-				{
-					dialogProcessor.Selection.SetSize(new Size(resizeDialog.ShapeWidth, resizeDialog.ShapeHeight));
-				}
-			}
-
-			viewPort.Invalidate();
 		}
 
         private void RelocateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -397,28 +259,123 @@ namespace Draw
 			RelocateShape();
 		}
 
-		private void RelocateShape()
-        {
-			if (dialogProcessor.Selection == null)
-			{
-				MessageBox.Show("Select a shape to relocate", "Relocate");
-				return;
-			}
-
-			var currentX = dialogProcessor.Selection.Location.X;
-			var currentY = dialogProcessor.Selection.Location.Y;
-			using (var relocateDialog = new RelocateDialog(currentX, currentY))
-			{
-				if (relocateDialog.ShowDialog() == DialogResult.OK)
-				{
-					dialogProcessor.Selection.Location = new Point(relocateDialog.XCoord, relocateDialog.YCoord);
-				}
-			}
-
-			viewPort.Invalidate();
+		private void OpacityToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SetShapeOpacity();
 		}
 
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+		private void BorderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SetShapeBorder();
+		}
+
+
+		private void RotateButton_Click(object sender, EventArgs e)
+		{
+			RotateShape();
+		}
+
+		private void ResizeButton_Click(object sender, EventArgs e)
+		{
+			ResizeShape();
+		}
+
+		private void RelocateButton_Click(object sender, EventArgs e)
+		{
+			RelocateShape();
+		}
+
+		private void OpacityButton_Click(object sender, EventArgs e)
+		{
+			SetShapeOpacity();
+		}
+
+		private void BorderButton_Click(object sender, EventArgs e)
+		{
+			SetShapeBorder();
+		}
+
+		private void TriangleToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawEmptyTriangle();
+		}
+
+		private void FilledTriangleToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawFilledTriangle();
+		}
+
+		private void PentagonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawEmptyPentagon();
+		}
+
+		private void FilledPentagonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawFilledPentagon();
+		}
+
+		private void HexagonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawEmptyHexagon();
+		}
+
+		private void FilledHexagonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawFilledHexagon();
+		}
+
+		private void PolygonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawEmptyPolygon();
+		}
+
+		private void FilledPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DrawFilledPolygon();
+		}
+
+		private void DrawTriangleButton_Click(object sender, EventArgs e)
+		{
+			DrawEmptyTriangle();
+		}
+
+		private void DrawFilledTriangleButton_Click(object sender, EventArgs e)
+		{
+			DrawFilledTriangle();
+		}
+
+		private void DrawPentagonButton_Click(object sender, EventArgs e)
+		{
+			DrawEmptyPentagon();
+		}
+
+		private void DrawFilledPentagonButton_Click(object sender, EventArgs e)
+		{
+			DrawFilledPentagon();
+		}
+
+		private void DrawHexagonButton_Click(object sender, EventArgs e)
+		{
+			DrawEmptyHexagon();
+		}
+
+		private void DrawFilledHexagonButton_Click(object sender, EventArgs e)
+		{
+			DrawFilledHexagon();
+		}
+
+		private void DrawNPolygonButton_Click(object sender, EventArgs e)
+		{
+			DrawEmptyPolygon();
+		}
+
+		private void DrawFilledNPolygonButton_Click(object sender, EventArgs e)
+		{
+			DrawFilledPolygon();
+		}
+
+		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
             {
@@ -454,11 +411,6 @@ namespace Draw
 			viewPort.Invalidate();
 		}
 
-		private string GetFileTypeFilter()
-        {
-			return "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif|Work File (*.bin)|*.bin";
-		}
-
         private void ColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			if (dialogProcessor.Selection == null)
@@ -473,257 +425,6 @@ namespace Draw
 				dialogProcessor.Selection.BorderColor = ColorPickerDialog.Color;
             }
 		}
-
-        private void OpacityToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			SetShapeOpacity();
-		}
-
-		private void SetShapeOpacity()
-        {
-			if (dialogProcessor.Selection == null)
-			{
-				MessageBox.Show("Select a shape to change opacity", "Opacity");
-				return;
-			}
-
-			var currentOpacity = dialogProcessor.Selection.Opacity;
-			using (var opacityDialog = new OpacityDialog(currentOpacity))
-			{
-				if (opacityDialog.ShowDialog() == DialogResult.OK)
-				{
-					dialogProcessor.Selection.Opacity = opacityDialog.ShapeOpacity;
-				}
-			}
-
-			viewPort.Invalidate();
-		}
-
-        private void BorderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			SetShapeBorder();
-		}
-
-		private void SetShapeBorder()
-        {
-			if (dialogProcessor.Selection == null)
-			{
-				MessageBox.Show("Select a shape to change border", "Border");
-				return;
-			}
-
-			var currentBorderWidth = dialogProcessor.Selection.BorderWidth;
-			var currentBorderColor = dialogProcessor.Selection.BorderColor;
-			using (var borderDialog = new BorderDialog(currentBorderWidth, currentBorderColor))
-			{
-				if (borderDialog.ShowDialog() == DialogResult.OK)
-				{
-					dialogProcessor.Selection.BorderWidth = borderDialog.BorderWidth;
-					dialogProcessor.Selection.BorderColor = borderDialog.BorderColor;
-				}
-			}
-
-			viewPort.Invalidate();
-		}
-
-        private void RotateButton_Click(object sender, EventArgs e)
-        {
-			RotateShape();
-        }
-
-        private void ResizeButton_Click(object sender, EventArgs e)
-        {
-			ResizeShape();
-        }
-
-        private void RelocateButton_Click(object sender, EventArgs e)
-        {
-			RelocateShape();
-        }
-
-        private void OpacityButton_Click(object sender, EventArgs e)
-        {
-			SetShapeOpacity();
-        }
-
-        private void BorderButton_Click(object sender, EventArgs e)
-        {
-			SetShapeBorder();
-        }
-
-        private void TriangleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawEmptyTriangle();
-        }
-
-		private void DrawEmptyTriangle()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomTriangle(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
-
-			viewPort.Invalidate();
-		}
-
-        private void FilledTriangleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawFilledTriangle();
-        }
-
-		private void DrawFilledTriangle()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFilledTriangle(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен триъгълник";
-
-			viewPort.Invalidate();
-		}
-
-        private void PentagonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawEmptyPentagon();
-        }
-
-		private void DrawEmptyPentagon()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomPentagon(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на петоъгълник";
-
-			viewPort.Invalidate();
-		}
-
-		private void DrawFilledPentagon()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFilledPentagon(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен петоъгълник";
-
-			viewPort.Invalidate();
-		}
-
-		private void DrawEmptyHexagon()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomHexagon(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник";
-
-			viewPort.Invalidate();
-		}
-
-		private void DrawFilledHexagon()
-        {
-			var color = ColorPickerDialog.Color;
-			dialogProcessor.AddRandomFillexHexagon(color);
-
-			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен шестоъгълник";
-
-			viewPort.Invalidate();
-		}
-
-		private void DrawEmptyPolygon()
-        {
-            using (var polygonSidesDialog = new PolygonSidesDialog())
-            {
-                if (polygonSidesDialog.ShowDialog() == DialogResult.OK)
-                {
-					var color = ColorPickerDialog.Color;
-					var sides = polygonSidesDialog.Sides;
-					dialogProcessor.AddRandomPolygon(color, sides);
-
-					statusBar.Items[0].Text = "Последно действие: Рисуване на многоъгълник";
-
-					viewPort.Invalidate();
-                }
-            }
-		}
-
-		private void DrawFilledPolygon()
-        {
-			using (var polygonSidesDialog = new PolygonSidesDialog())
-			{
-				if (polygonSidesDialog.ShowDialog() == DialogResult.OK)
-				{
-					var color = ColorPickerDialog.Color;
-					var sides = polygonSidesDialog.Sides;
-					dialogProcessor.AddRandomFilledPolygon(color, sides);
-
-					statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен многоъгълник";
-
-					viewPort.Invalidate();
-				}
-			}
-		}
-
-        private void FilledPentagonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawFilledPentagon();
-        }
-
-        private void HexagonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawEmptyHexagon();
-        }
-
-        private void FilledHexagonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawFilledHexagon();
-        }
-
-        private void PolygonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawEmptyPolygon();
-        }
-
-        private void FilledPolygonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			DrawFilledPolygon();
-        }
-
-        private void DrawTriangleButton_Click(object sender, EventArgs e)
-        {
-			DrawEmptyTriangle();
-        }
-
-        private void DrawFilledTriangleButton_Click(object sender, EventArgs e)
-        {
-			DrawFilledTriangle();
-        }
-
-        private void DrawPentagonButton_Click(object sender, EventArgs e)
-        {
-			DrawEmptyPentagon();
-        }
-
-        private void DrawFilledPentagonButton_Click(object sender, EventArgs e)
-        {
-			DrawFilledPentagon();
-        }
-
-        private void DrawHexagonButton_Click(object sender, EventArgs e)
-        {
-			DrawEmptyHexagon();
-        }
-
-        private void DrawFilledHexagonButton_Click(object sender, EventArgs e)
-        {
-			DrawFilledHexagon();
-        }
-
-        private void DrawNPolygonButton_Click(object sender, EventArgs e)
-        {
-			DrawEmptyPolygon();
-        }
-
-        private void DrawFilledNPolygonButton_Click(object sender, EventArgs e)
-        {
-			DrawFilledPolygon();
-        }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -752,5 +453,316 @@ namespace Draw
 			UngroupShapesButton.Checked = false;
 			ColorBucketButton.Checked = false;
 		}
+		#endregion
+
+		#region Edit Shapes
+
+		private void RotateShape()
+		{
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to rotate", "Rotate");
+				return;
+			}
+
+			using (var rotateDialog = new RotateDialog(dialogProcessor.Selection.Rotation))
+			{
+				if (rotateDialog.ShowDialog() == DialogResult.OK)
+				{
+					dialogProcessor.Selection.Rotation = rotateDialog.Degrees;
+				}
+			}
+
+			viewPort.Invalidate();
+		}
+
+		private void ResizeShape()
+		{
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to resize", "Resize");
+				return;
+			}
+
+			var currentWidth = dialogProcessor.Selection.Rectangle.Width;
+			var currentHeight = dialogProcessor.Selection.Rectangle.Height;
+			using (var resizeDialog = new ResizeDialog(currentWidth, currentHeight))
+			{
+				if (resizeDialog.ShowDialog() == DialogResult.OK)
+				{
+					dialogProcessor.Selection.SetSize(new Size(resizeDialog.ShapeWidth, resizeDialog.ShapeHeight));
+				}
+			}
+
+			viewPort.Invalidate();
+		}
+
+		private void RelocateShape()
+		{
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to relocate", "Relocate");
+				return;
+			}
+
+			var currentX = dialogProcessor.Selection.Location.X;
+			var currentY = dialogProcessor.Selection.Location.Y;
+			using (var relocateDialog = new RelocateDialog(currentX, currentY))
+			{
+				if (relocateDialog.ShowDialog() == DialogResult.OK)
+				{
+					dialogProcessor.Selection.Location = new Point(relocateDialog.XCoord, relocateDialog.YCoord);
+				}
+			}
+
+			viewPort.Invalidate();
+		}
+
+		private void SetShapeOpacity()
+		{
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to change opacity", "Opacity");
+				return;
+			}
+
+			var currentOpacity = dialogProcessor.Selection.Opacity;
+			using (var opacityDialog = new OpacityDialog(currentOpacity))
+			{
+				if (opacityDialog.ShowDialog() == DialogResult.OK)
+				{
+					dialogProcessor.Selection.Opacity = opacityDialog.ShapeOpacity;
+				}
+			}
+
+			viewPort.Invalidate();
+		}
+
+		private void SetShapeBorder()
+		{
+			if (dialogProcessor.Selection == null)
+			{
+				MessageBox.Show("Select a shape to change border", "Border");
+				return;
+			}
+
+			var currentBorderWidth = dialogProcessor.Selection.BorderWidth;
+			var currentBorderColor = dialogProcessor.Selection.BorderColor;
+			using (var borderDialog = new BorderDialog(currentBorderWidth, currentBorderColor))
+			{
+				if (borderDialog.ShowDialog() == DialogResult.OK)
+				{
+					dialogProcessor.Selection.BorderWidth = borderDialog.BorderWidth;
+					dialogProcessor.Selection.BorderColor = borderDialog.BorderColor;
+				}
+			}
+
+			viewPort.Invalidate();
+		}
+		#endregion
+
+		#region Draw Shapes
+		private void DrawEmptyRectangle()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomRectangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledRectangle()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledRectangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен правоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawEllipse()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomElipse(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledEllipse()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledElipse(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнена елипса";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledTriangle()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledTriangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен триъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawEmptyTriangle()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomTriangle(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawEmptyPentagon()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomPentagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на петоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledPentagon()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFilledPentagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен петоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawEmptyHexagon()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomHexagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawFilledHexagon()
+		{
+			var color = ColorPickerDialog.Color;
+			dialogProcessor.AddRandomFillexHexagon(color);
+
+			statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен шестоъгълник";
+
+			viewPort.Invalidate();
+		}
+
+		private void DrawEmptyPolygon()
+		{
+			using (var polygonSidesDialog = new PolygonSidesDialog())
+			{
+				if (polygonSidesDialog.ShowDialog() == DialogResult.OK)
+				{
+					var color = ColorPickerDialog.Color;
+					var sides = polygonSidesDialog.Sides;
+					dialogProcessor.AddRandomPolygon(color, sides);
+
+					statusBar.Items[0].Text = "Последно действие: Рисуване на многоъгълник";
+
+					viewPort.Invalidate();
+				}
+			}
+		}
+
+		private void DrawFilledPolygon()
+		{
+			using (var polygonSidesDialog = new PolygonSidesDialog())
+			{
+				if (polygonSidesDialog.ShowDialog() == DialogResult.OK)
+				{
+					var color = ColorPickerDialog.Color;
+					var sides = polygonSidesDialog.Sides;
+					dialogProcessor.AddRandomFilledPolygon(color, sides);
+
+					statusBar.Items[0].Text = "Последно действие: Рисуване на запълнен многоъгълник";
+
+					viewPort.Invalidate();
+				}
+			}
+		}
+        #endregion
+
+        #region File Saving
+        private void SaveFile(string fileName, int filterIndex)
+		{
+			dialogProcessor.Deselect();
+
+			var imageFormat = GetImageFormat(filterIndex);
+			if (imageFormat != null)
+			{
+				SaveImage(fileName, imageFormat);
+			}
+			else
+			{
+				SaveBinary(fileName);
+			}
+
+			viewPort.Invalidate();
+		}
+
+		private void SaveImage(string fileName, ImageFormat imageFormat)
+		{
+			using (var bmp = new Bitmap(viewPort.Width, viewPort.Height))
+			using (var graphics = Graphics.FromImage(bmp))
+			using (var brush = new SolidBrush(Color.White))
+			{
+				graphics.FillRectangle(brush, new Rectangle(0, 0, viewPort.Width, viewPort.Height));
+				dialogProcessor.Draw(graphics);
+				bmp.Save(fileName, imageFormat);
+			}
+
+			statusBar.Items[0].Text = "Последно действие: Запазване на изображението";
+		}
+
+		private void SaveBinary(string fileName)
+		{
+			using (var file = new FileStream(fileName, FileMode.Create))
+			{
+				var formatter = new BinaryFormatter();
+				formatter.Serialize(file, dialogProcessor.ShapeList);
+			}
+
+			statusBar.Items[0].Text = "Последно действие: Запазване на работен файл";
+		}
+
+		private ImageFormat GetImageFormat(int filterIndex)
+		{
+			switch (filterIndex)
+			{
+				case 1:
+					return ImageFormat.Bmp;
+				case 2:
+					return ImageFormat.Jpeg;
+				case 3:
+					return ImageFormat.Png;
+				case 4:
+					return ImageFormat.Gif;
+				default:
+					return null;
+			}
+		}
+
+		private string GetFileTypeFilter()
+		{
+			return "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif|Work File (*.bin)|*.bin";
+		}
+
+		#endregion
+
 	}
 }
