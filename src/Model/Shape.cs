@@ -20,7 +20,7 @@ namespace Draw
         private Rectangle _bottomRightHandle;
         private Rectangle _middleLeftHandle;
         private Rectangle _middleRightHandle;
-        private Handle _activeHandle;
+        public Handle _activeHandle;
 
         private bool _isClicked;
         private Point _clickLocation;
@@ -38,19 +38,19 @@ namespace Draw
             Opacity = 100;
         }
 
-        public Point Location { get; set; }
-        public Rectangle Rectangle { get; private set; }
-        public float Rotation { get; set; }
-        public Color FillColor { get; set; }
-        public Color BorderColor { get; set; }
-        public float BorderWidth { get; set; }
-        public int Opacity { get; set; }
+        public virtual Point Location { get; set; }
+        public virtual Rectangle Rectangle { get; protected set; }
+        public virtual float Rotation { get; set; }
+        public virtual Color FillColor { get; set; }
+        public virtual Color BorderColor { get; set; }
+        public virtual float BorderWidth { get; set; }
+        public virtual int Opacity { get; set; }
 
-        public bool Selected { get; set; }
+        public virtual bool Selected { get; set; }
 
         public abstract void DrawShape(Graphics graphics, Brush fillBrush, Pen drawPen);
 
-        public void Draw(Graphics graphics)
+        public virtual void Draw(Graphics graphics)
         {
             var handleSize = 10;
             var halfHandleSize = handleSize / 2;
@@ -91,11 +91,10 @@ namespace Draw
                 }
             }
 
-
             graphics.ResetTransform();
         }
 
-        public void DragStart(MouseEventArgs e)
+        public virtual void DragStart(MouseEventArgs e)
         {
             _isClicked = true;
             _clickLocation = InvertTransformPoint(e.Location);
@@ -148,7 +147,7 @@ namespace Draw
             }
         }
 
-        public void Drag(MouseEventArgs e)
+        public virtual void Drag(MouseEventArgs e)
         {
             if (!_isClicked)
             {
@@ -234,19 +233,19 @@ namespace Draw
             Rectangle = new Rectangle(left, top, width, height);
         }
 
-        public void DragEnd(MouseEventArgs e)
+        public virtual void DragEnd(MouseEventArgs e)
         {
             _isClicked = false;
             Location = TransformPoint(_center);
             Rectangle = new Rectangle(0 - Rectangle.Width / 2, 0 - Rectangle.Height / 2, Rectangle.Width, Rectangle.Height);
         }
 
-        public void SetSize(Size size)
+        public virtual void SetSize(Size size)
         {
             Rectangle = new Rectangle(0 - size.Width / 2, 0 - size.Height / 2, size.Width, size.Height);
         }
 
-        public bool Contains(Point point)
+        public virtual bool Contains(Point point)
         {
             var transformedPoint = InvertTransformPoint(point);
 
@@ -254,7 +253,7 @@ namespace Draw
                 || (this.Selected && _rotationHandle.Contains(transformedPoint));
         }
 
-        public Shape Copy()
+        public virtual Shape Copy()
         {
             var copy = this.MemberwiseClone() as Shape;
             copy.Location = new Point(Rectangle.Width / 2 + 20, Rectangle.Height / 2 + 20);

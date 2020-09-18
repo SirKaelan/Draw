@@ -79,6 +79,16 @@ namespace Draw
 				statusBar.Items[0].Text = "Последно действие: Задаване цвят на примитив";
 			}
 
+            if (GroupShapesButton.Checked)
+            {
+				dialogProcessor.AddToGroup(shape);
+            }
+
+            if (UngroupShapesButton.Checked)
+            {
+				dialogProcessor.RemoveFromGroup(e.Location);
+            }
+
 			viewPort.Invalidate();
 		}
 
@@ -714,5 +724,33 @@ namespace Draw
         {
 			DrawFilledPolygon();
         }
-    }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			MessageBox.Show("Автор: Калин Йержабек", "About");
+        }
+
+        private void GroupShapesButton_Click(object sender, EventArgs e)
+        {
+			dialogProcessor.SelectGroup();
+			UngroupShapesButton.Checked = false;
+			PointerButton.Checked = false;
+			viewPort.Invalidate();
+        }
+
+        private void UngroupShapesButton_Click(object sender, EventArgs e)
+        {
+			dialogProcessor.SelectGroup();
+			GroupShapesButton.Checked = false;
+			PointerButton.Checked = false;
+			viewPort.Invalidate();
+		}
+
+        private void PointerButton_Click(object sender, EventArgs e)
+        {
+			GroupShapesButton.Checked = false;
+			UngroupShapesButton.Checked = false;
+			ColorBucketButton.Checked = false;
+		}
+	}
 }

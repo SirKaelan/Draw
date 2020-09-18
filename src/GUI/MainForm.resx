@@ -227,6 +227,30 @@
         q+d5AymnjJ6l08+nAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="GroupShapesButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAFSSURBVGhD7Y9BasRAEAP9/08nvgh0qFYmgm0M64I6SRp6
+        rpeXHX7+cBu6wR2hsrsN3eCOUNndhm5wR6j8ZEeo/GRHqOxuQze4I1R2t6Eb3BEqu9vQDe4R/yovUN/z
+        FR9R1thS79NQWWNLvU9DZY0t9T4NlTW21Ps0VNbYUu/TUFljS71PQ2WNLfU+DZU1ttT7NFTWKCiTRMoi
+        J482CsokkbLIyaONgjJJpCxy8mijoEwSKYucPNooKJNEyiInjzYKyiSRssjJo42CMkmkLFIPD9H7JJGy
+        SD08RO+TRMoi9fBG21YiZZF6eKNtK5GySD280baVSFmkHt5o20qkLFIPb7RtJVIWqYc32rYSKYvUwxtt
+        W4mURerhh/jOj6g8uQ3d4I5Q2d2GbnBHqOxuQze4I1R+siNUfrIjVHa3oRvcESq729AN7giV3W3oBvfl
+        5bNc1y8ONWy+qYm+3wAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="UngroupShapesButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAFkSURBVHhe7c4xbgQxDATB+/+n7UQB0RiDPJMaJSxgIu2i
+        +VlrrbXWWiv1k2yaasTZqSPipqlGnJ064uXs1BEvZ6eOeDk7dcTL2akj4qapRpydOiJummrEPeM+xN1L
+        uQ9y91Lug7Ie37lx1wOQ9fjOjbseAPa+3bjrAWDv2427HgD2vt246wFg79uNux6ArMd3btz1AGQ9vnPj
+        rgeg2qt+12YLHdVe9bs2W+io9qrftdlCR7VX/a7NFjqqvep3bbbQUe1Vv2uzhY5qr/pdmy10VHvV79ps
+        oaPaq37XZgsd1V71u39jgJumGnGUvbcxwE1TjTjK3tsYeD3K3tsYeD3K3tsYeD3K3tsYeD3K3tsY4Ch7
+        z/B/jrL3NgY4yt4z/J+j7N3OfZC7l3If5O79iYdw01Qjzk4dETdNNeLs1BEvZ6eOeDk7dcTL2akjXs5O
+        HRE3TTXi7NQRcdNUI26ttdZaS/h8fgHpHrxu4MELWgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="DrawRectangleButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

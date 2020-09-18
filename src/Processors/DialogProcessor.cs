@@ -9,6 +9,7 @@ namespace Draw
 	public class DialogProcessor : DisplayProcessor
 	{
 		private Shape _copiedShape;
+		private GroupShape _group;
 
 		#region Constructor
 		
@@ -132,6 +133,43 @@ namespace Draw
 			ShapeList.Add(triangle);
 		}
 
+		public void AddToGroup(Shape shape)
+        {
+            if (_group == null)
+            {
+				_group = new GroupShape();
+				ShapeList.Add(_group);
+            }
+
+            if (!_group.ContainsShape(shape) && !(shape is GroupShape))
+            {
+				_group.AddShape(shape);
+				ShapeList.Remove(shape);
+            }
+
+			Select(_group);
+        }
+
+		public void RemoveFromGroup(Point location)
+        {
+            if (_group == null)
+            {
+				return;
+            }
+
+            if (_group.Contains(location))
+            {
+				var shape = _group.RemoveShape(location);
+				ShapeList.Add(shape);
+            }
+
+            if (_group.IsEmpty())
+            {
+				ShapeList.Remove(_group);
+				_group = null;
+            }
+        }
+
 		/// <summary>
 		/// Проверява дали дадена точка е в елемента.
 		/// Обхожда в ред обратен на визуализацията с цел намиране на
@@ -173,6 +211,18 @@ namespace Draw
 
 			Selection.Selected = false;
 			Selection = null;
+        }
+
+		public void SelectGroup()
+        {
+			Deselect();
+
+            if (_group == null)
+            {
+				return;
+            }
+
+			Select(_group);
         }
 
 		public void Clear()
