@@ -453,6 +453,24 @@ namespace Draw
 			UngroupShapesButton.Checked = false;
 			ColorBucketButton.Checked = false;
 		}
+
+		private void GroupToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.SelectGroup();
+			GroupShapesButton.Checked = true;
+			UngroupShapesButton.Checked = false;
+			PointerButton.Checked = false;
+			viewPort.Invalidate();
+		}
+
+		private void UngroupToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			dialogProcessor.SelectGroup();
+			UngroupShapesButton.Checked = true;
+			GroupShapesButton.Checked = false;
+			PointerButton.Checked = false;
+			viewPort.Invalidate();
+		}
 		#endregion
 
 		#region Edit Shapes
@@ -762,7 +780,6 @@ namespace Draw
 			return "BMP (*.bmp)|*.bmp|JPEG (*.jpg;*.jpeg)|*.jpg|PNG (*.png)|*.png|GIF (*.gif)|*.gif|Work File (*.bin)|*.bin";
 		}
 
-		#endregion
-
-	}
+        #endregion
+    }
 }
